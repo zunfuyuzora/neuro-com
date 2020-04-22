@@ -182,27 +182,27 @@
     <p class="h5">Modul</p>
     <div class="container my-3 p-0">
         <div class="border py-2 px-3">
-            <table class="table table-sm table-borderless">
+            <table class="table table-sm table-borderless" style="table-layout: fixed;">
                 <tr>
-                    <td class="text-truncate">
+                    <td class="text-truncate w-25">
                         <a href="#">frank144</a>     
                     </td>
-                    <td class="text-truncate">
+                    <td class="text-truncate w-50">
                         Modul Penelitian Tentang Siklus Kehidupan
                     </td>
-                    <td>
-                        <a href="#">Download/View</a>
+                    <td class="text-right">
+                        <a href="#">Download</a>
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-truncate">
+                    <td class="text-truncate w-25">
                         <a href="#">Stussy</a>     
                     </td>
-                    <td class="text-truncate">
+                    <td class="text-truncate w-50">
                         Sejarah Peradaban
                     </td>
-                    <td>
-                        <a href="#">Download/View</a>
+                    <td class="text-right">
+                        <a href="#">Download</a>
                     </td>
                 </tr>
             </table>

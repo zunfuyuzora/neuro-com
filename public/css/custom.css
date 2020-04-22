@@ -42,9 +42,10 @@
     /* margin-top: -100px; */
 }
 
-.qs-content {
-    max-width: 400px;
-    min-width: 290px;
+hr {
+    margin: 0;
+    border: none  !important;
+    border-top: 1px solid gray !important;
 }
 
 .item-card {
@@ -179,20 +180,56 @@ hr{
     height: 100px;
     margin: .5rem 1rem .5rem 0;
     border-radius: 5px;
-} 
+}
 
-a.box.create {
+.flex-center-ultra {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-middle-left {
+    display: flex; 
+    align-items: center;
+}
+
+.my-status-success {
+    background: #34B697;
+}
+.my-status-process {
+    background: #DAAF19;
+}
+.my-status-failed {
+    background: #BD3232;
+}
+
+a.d-block{
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+}
+a.d-block:hover {
+    transform: scale(1.05);
+}
+a.d-block:focus {
+    transform: scale(1);
+    outline: 2px solid #34B697;
+}
+
+a.box.create,.xbox.create {
     color: black;
     background: #fff;
     border: 2px dashed black;
     opacity: .5
 }
 
-a.box.create:focus {
+a.box.create:focus,.xbox.create {
     color: rgba(0, 0, 0, 0.600);
     background: #fff;
     border: 2px dashed rgba(0, 0, 0, 0.600);
     opacity: .5
+}
+.xbox.create:hover {
+    text-decoration:underline;
 }
 
 @media (min-width: 576px) {

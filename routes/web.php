@@ -25,6 +25,7 @@ Route::get('/profile', function() {
     return view('profile');
 });
 
+///DONE
 Route::get('/group/slug-name', function() {
     return view('group');
 });
@@ -33,6 +34,7 @@ Route::get('/group/slug-name/setting', function() {
     return view('setting');
 });
 
+///ON WORKING
 Route::get('/board/unique-serial', function() {
     return view('board');
 });
