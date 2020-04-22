@@ -92,28 +92,10 @@
                     </div>
                 </div>
             </div>
-            <div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
-                <div class="container py-3">
-                    <ul class="list-group">
-                        <li class="list-group-item ">
-                            <a href="#">Private</a>
-                        </li>
-                        <li class="list-group-item active">
-                            <a href="#">Grup #1</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">Kelompok ABC</a>
-                        </li>
-                    </ul>
-                    <div class="form-group">
-                    <a href="#" class="my-2 btn btn-primary">
-                        Buat Grup
-                    </a></div>
-                </div>
-            </div>
+            @yield('card-content')
         </div>
-        <div class=" col"></div>
-        <div id="main_content" class="col-sm-12 col-md-7 col-lg-7 p-0 ">
+        <div class="col"></div>
+        <div id="main_content" class="col-sm-12 col-md-8 col-lg-7 p-0 ">
 
             @yield('main-content')
 
@@ -123,8 +105,6 @@
 
 <div id="footer" class="bg-dark p-4 mt-5" style="bottom:0;">
     <div class="container text-white">
-        <a href="#" class="text-white">Backup Database</a><br>
-        <a href="#" class="text-white">Generate Report</a>
     </div>
 </div>
 @endsection

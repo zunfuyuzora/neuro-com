@@ -1,64 +1,101 @@
 @extends('extends.dashboard',['_pagename'=>'Home'])
+@section('card-content')
+
+    {{-- 
+        #####
+        ##  WIDE SCREEN - GROUP SELECTION
+        #####
+        --}}
+
+<div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
+    <div class="container py-3">
+        <ul class="list-group">
+            <li class="list-group-item ">
+                <a href="#">Private</a>
+            </li>
+            <li class="list-group-item active">
+                <a href="#">Grup #1</a>
+            </li>
+            <li class="list-group-item">
+                <a href="#">Kelompok ABC</a>
+            </li>
+        </ul>
+        <div class="form-group">
+        <a href="#" class="my-2 btn btn-primary">
+            Buat Grup
+        </a></div>
+    </div>
+</div>
+@endsection
+
 @section('main-content')
-<div id="quick-search" class="container d-flex justify-content-center bg-white py-2 shadow-sm mb-4">
 
-    <div class="container">
+    {{-- 
+        #####
+        ##  SMALL SCREEN - GROUP SELECTION
+        #####
+        --}}
 
-        <p class="font-weight-bolder">Quick Categories</p>
-        <div class="row">
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Laptop</a>
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Mouse</a>
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Earphone</a>
-        </div>
-        <div class="row">
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Mug</a>
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Chair</a>
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Book</a>
-        </div>
-        <div class="row">
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Cable</a>
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Keyboard</a>
-            <a href="" class="btn btn-lg bg-green text-white m-1 col">Headphone</a>
-        </div>
-    </div>
-
-</div>
-
-<div id="last-item" class="container py-2 bg-white shadow-sm">
-    <p class="font-weight-bold">Most Borrowed item</p>
-    <div class="li-content overflow-auto">
-        <div class="d-flex">
-            <a class="item-card card">
-                <div class="item-thumbnail">
-                    <img src="{{ asset('img/acer.png')}}" alt="[img Acer]" class="img-fluid">
+<div id="sm-group-selection" class="container d-md-none">
+    <div class="text-right">
+        <form action="" class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" class="btn btn-primary form-control">
+                        Buat Grup
+                    </a>
                 </div>
-                <div class="item-name">Acer Projector</div>
-            </a>
-            <a class="item-card card">
-                <div class="item-thumbnail">
-                    <img src="{{ asset('img/acer.png')}}" alt="[img Acer]" class="img-fluid">
+                <div class="col-6">
+                    <select name="" id="" class="form-control">
+                        <option value="">Private</option>
+                        <option value="" selected>Grup #1</option>
+                        <option value="">Kelompok ABC</option>
+                    </select>
                 </div>
-                <div class="item-name">Acer Projector</div>
-            </a>
-            <a class="item-card card">
-                <div class="item-thumbnail">
-                    <img src="{{ asset('img/acer.png')}}" alt="[img Acer]" class="img-fluid">
-                </div>
-                <div class="item-name">Acer Projector</div>
-            </a>
-            <a class="item-card card">
-                <div class="item-thumbnail">
-                    <img src="{{ asset('img/acer.png')}}" alt="[img Acer]" class="img-fluid">
-                </div>
-                <div class="item-name">Acer Projector</div>
-            </a>
-            <a class="item-card card">
-                <div class="item-thumbnail">
-                    <img src="{{ asset('img/acer.png')}}" alt="[img Acer]" class="img-fluid">
-                </div>
-                <div class="item-name">Acer Projector</div>
-            </a>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
+
+<div class="container d-flex flex-column justify-content-center bg-white py-4 shadow-sm mb-4">
+
+    {{-- 
+        #####
+        ##  GROUP ACTION BUTTON
+        #####
+        --}}
+
+    <div id="group-control" class="mb-4 text-center">
+        <a href="#" class="btn btn-info">Atur Grup</a>
+        <a href="#" class="btn btn-primary">Buat Mading</a>
+    </div>
+
+    {{-- 
+        #####
+        ##  BOARD LIST 
+        #####
+        --}}
+
+
+    <div id="board-list" class="mb-4">
+        <p class="h5">Board</p>
+            <div class="container horizontal-scrollable"> 
+                <div class="row text-center"> 
+                    <a href="#" class="col-6 col-md-4 box" style="background:#34B697">
+                        <div class="mx-2 text-truncate text-white">
+                            Tim Pemasaran 1 232
+                        </div>
+                    </a> 
+                    <a href="#" class="col-6 col-md-4 box" style="background:#BD3232">
+                        <div class="mx-2 text-truncate text-white">
+                            Kerja Lapangan
+                        </div>
+                    </a> 
+                    <a href="#" class="col-6 col-md-4 box create">
+                        Buat baru
+                    </a> 
+                </div> 
+            </div> 
+    </div>
+
 @endsection
