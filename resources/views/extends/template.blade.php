@@ -34,6 +34,8 @@
 
   <!-- Theme JS -->
   <script src="{{ asset('js/argon.min.js')}}"></script>
+  <script src="{{ asset('js/custom.js')}}"></script>
+  @stack('script')
 </body>
 
 </html>

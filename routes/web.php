@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+///DONE
 Route::get('/', function () {
     return view('landing');
 });
@@ -21,6 +22,7 @@ Route::get('/home', function() {
     return view('home');
 })->name('home');
 
+///DONE
 Route::get('/profile', function() {
     return view('profile');
 });
@@ -30,19 +32,18 @@ Route::get('/group/slug-name', function() {
     return view('group');
 });
 
-Route::get('/group/slug-name/setting', function() {
-    return view('setting');
+///DONE
+Route::get('/group/slug-name/settings', function() {
+    return view('settings');
 });
 
-///ON WORKING
+///DONE
 Route::get('/board/unique-serial', function() {
     return view('board');
 });
 
+///DONE
 Route::get('/task/unique-serial', function() {
     return view('task');
 });
 
-Route::get('/task/unique-serial', function() {
-    return view('task');
-});

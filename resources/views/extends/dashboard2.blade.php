@@ -63,13 +63,18 @@
                     <div class="mask">
                         <div class="navigate container py-3">
                             <div class="wrapper d-flex justify-content-between">
+                                    @if ($_pagename!= 'Home')
                                 <div class="">
-                                    @if ($_pagename != 'Home')
-                                    <a href="{{URL()->previous()}}" class="text-white">
-                                        <i class="fa fa-angle-left"></i> Back</a>
-                                    @endif
+                                    <a href="#" title="Back to group Home" class="text-white">
+                                        <i class="fa fa-angle-left"></i>
+                                        {{$_pagename}}
+                                    </a>
                                 </div>
-                                <div class=""><a href="#" class="text-white text-right">{{ $_pagename}}</a></div>
+                                    @if ($_pagename!= 'Pengaturan Grup' & 
+                                    $_pagename!= 'Profil')
+                                    <div class=""><a href="#" title="Group Settings" class="text-white text-right"><i class="fa fa-cog"></i></a></div>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                         <div class="profile-header container bg-white 
@@ -94,7 +99,7 @@
             </div>
             @yield('card-content')
         </div>
-        <div class="col"></div>
+        <div class="col d-none d-md-block"></div>
         <div id="main_content" class="col-sm-12 col-md-8 col-lg-7 p-0 ">
 
             @yield('main-content')

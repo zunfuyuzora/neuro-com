@@ -1,4 +1,4 @@
-@extends('extends.dashboard2',['_pagename'=>'Home'])
+@extends('extends.dashboard2',['_pagename'=>'Grup #1'])
 
 @section('card-content')
 
@@ -37,7 +37,8 @@
         <div class="row">
             <div class="col">
                 <div class="h4 font-weight-bold">Biologi 
-                    <span class="text-small"><a href="#"><i class="fa fa-edit"></a></i></span>
+                    <span class="text-small">
+                    <a href="#editNameModal" role="button" data-toggle="modal"  aria-expanded="false" aria-controls="#editnameModal" title="Change Group Name"><i class="fa fa-edit"></a></i></span>
                 </div>
             </div>
             <div class="col-3 text-right">
@@ -50,6 +51,28 @@
             </div>
         </div>
         <hr >
+    </div>
+
+    <div id="editNameModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editNameModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h5" id="editModalLabel">Change Board Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" id="editNameForm" class="form-group">
+                        <input type="text" class="form-control" value="Biologi">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" form="editNameForm">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="task-container">
@@ -155,11 +178,42 @@
     {{-- CREATE NEW TASK BUTTON --}}
         <div class="px-4 my-3">
             <div class="row justify-content-center">
-                <a href="#" class="col-12 col-md-6 btn form-control xbox create">
-                            Buat Tugas Baru +
-                </a> 
+                <a href="#createTaskModal" data-toggle="modal" aria-controls="#createTaskModal" role="button" aria-expanded="false" class="col-12 col-md-6 btn form-control xbox create">Buat Tugas Baru +</a> 
             </div>
         </div>
+        </div>
+    </div>
+
+    <div id="createTaskModal" tabindex="-2" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Buat Tugas Baru</h5>
+                    <button class="close" data-dismiss="modal" aria-label="close" type="button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-group" id="createTaskForm">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <label for="taskname">Nama Tugas</label>
+                                <input type="text" name="taskname" id="taskname" aria-label="Task Name" class="form-control">
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label for="personInCharge">Penanggung jawab</label>
+                                <input type="text" name="personInCharge" id="personInCharge" aria-label="Person In Charge" class="form-control">
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label for="description">Deskripsi</label>
+                                <textarea type="text" name="description" id="description" aria-label="Description" class="form-control" contenteditable="false" style="resize:none" rows="5" ></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" form="editNameForm">Buat Baru</button>
+                </div>
+            </div>
         </div>
     </div>
 
