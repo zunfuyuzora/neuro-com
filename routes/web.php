@@ -30,6 +30,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/group', 'GroupController')->middleware('auth')->except('edit');
 Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.settings');
 
+Route::resource('/board', 'BoardController')->except('create','edit');
+
 ///DONE
 Route::get('/profile', function() {
     return view('profile');

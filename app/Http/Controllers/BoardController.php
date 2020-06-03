@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Board;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Member;
 
 class BoardController extends Controller
 {
@@ -14,7 +16,8 @@ class BoardController extends Controller
      */
     public function index()
     {
-        //
+        //ADMIN PRIVELEGES
+        return view('board.board');
     }
 
     /**
@@ -35,7 +38,21 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "_group"=> "required",
+            "name" => "required",
+            "objective" => "required"
+        ]);
+        $x = Member::where('group_id', $request->_group)->where('user_id', Auth::user()->id)->first();
+
+        $newBoard = Board::create([
+            "member_id" => $x->id,
+            "group_id" => $x->group_id,
+            "name" => $request->name,
+            "objective" => $request->objective,
+        ]);
+
+        return redirect()->route("board.show", $newBoard->id);
     }
 
     /**
@@ -46,7 +63,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
+        return view('board.show', ['board'=>$board]);
     }
 
     /**
@@ -69,7 +86,16 @@ class BoardController extends Controller
      */
     public function update(Request $request, Board $board)
     {
-        //
+        $request->validate([
+            "name" => "required",
+            "objective" => "required"
+        ]);
+        
+        $board->name = $request->name;
+        $board->objective = $request->objective;
+        $board->save();
+
+        return redirect()->route("board.show", $board->id);
     }
 
     /**

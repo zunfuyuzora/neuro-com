@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Board extends Model
 {
     public $fillable = [
-        'name','objective'
+        'name','objective','member_id','group_id'
     ];
 
     public function group() {
-        return $this->belongsTo('\Group');
+        return $this->belongsTo('App\Group');
     }
 
     public function task() {
-        return $this->hasMany('\Task');
+        return $this->hasMany('App\Task');
     }
 }

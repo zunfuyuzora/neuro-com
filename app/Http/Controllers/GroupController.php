@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Member;
 use App\Content;
+use App\Board;
 
 class GroupController extends Controller
 {
@@ -75,7 +76,8 @@ class GroupController extends Controller
     public function show(Group $group)
     {
         $magazine = Content::where('group_id', $group->id)->get();
-        return view('group.show', ['group_data' => $group, 'magazine' => $magazine]);
+        $board = Board::where('group_id',$group->id)->get();
+        return view('group.show', ['group_data' => $group, 'magazine' => $magazine,'board'=>$board]);
     }
 
     /**

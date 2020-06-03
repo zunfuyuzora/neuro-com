@@ -99,14 +99,17 @@
         <p class="h5">Board</p>
             <div class="container horizontal-scrollable"> 
                 <div class="row text-center"> 
-                    @if ($boards)
-                    <a href="#" class="col-6 col-md-4 box" style="background:#34B697">
+                    @if (isset($board) & count($board) >= 1)
+                    @foreach ($board as $b)
+                        
+                    <a href="{{route('board.show', $b->id)}}" class="col-6 col-md-4 box" style="background:#34B697">
                         <div class="mx-2 text-truncate text-white">
-                            Biologi
+                            {{$b->name}}
                         </div>
                     </a> 
+                    @endforeach
                     @endif
-                    <a href="#" class="col-6 col-md-4 box create">
+                    <a href="#newBoardModal" data-toggle="modal" data-target="#newBoardModal" class="col-6 col-md-4 box create">
                         Create New
                     </a> 
                 </div> 
@@ -122,17 +125,16 @@
     <div id="highlight" class="mb-4">
         <p class="h5">Highlight</p>
         <div class="container my-3 p-0">
-            {{-- Item highlight --}}
+            
+            @if (isset($highlight))
+                    
             <div class="py-2 px-3 mb-3 rounded" style="background-color:#34B697">
                 <a href="#" class="d-block m-2 py-2 px-3 bg-white text- text-dark">Rangkuman Materi</a>
                 <p class="h6 mx-2 font-weight-bold text-truncate text-white">Biologi</p>
             </div>
-            {{--  --}}
-
-            <div class="py-2 px-3 mb-3 rounded" style="background-color:#BD3232">
-                <a href="#" class="d-block m-2 py-2 px-3 bg-white text-truncate text-dark">Presentasi</a>
-                <p class="h6 mx-2 font-weight-bold text-truncate text-white">Sejarah</p>
-            </div>
+            @else
+            <div class="text-center">There is no Highlight for this moment</div>
+            @endif
         </div>
     </div>
 
@@ -146,6 +148,8 @@
     <div class="container my-3 p-0">
         <div class="border py-2 px-3">
             <table class="table table-sm table-borderless" style="table-layout: fixed;">
+                @if (isset($highlight))
+                    
                 <tr>
                     <td class="text-truncate w-25">
                         <a href="#">frank144</a>     
@@ -157,20 +161,45 @@
                         <a href="#">Download</a>
                     </td>
                 </tr>
+                @else
                 <tr>
-                    <td class="text-truncate w-25">
-                        <a href="#">Stussy</a>     
-                    </td>
-                    <td class="text-truncate w-50">
-                        Sejarah Peradaban
-                    </td>
-                    <td class="text-right">
-                        <a href="#">Download</a>
-                    </td>
+                    <td class="text-center">No Highlight for This Group</td>
                 </tr>
+                @endif
             </table>
         </div>
     </div>
 </div>
+{{-- MODAL PAGE --}}
 
+<div class="modal fade" tabindex="-1" role="dialog" id="newBoardModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Board</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('board.store')}}" method="POST" id="CreateNewBoard">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Board Name">
+                </div>
+                <div class="form-group">
+                    <label for="objective">Objective</label>
+                    <textarea rows="4" name="objective" class="form-control" style="resize: none" placeholder="Describe about goal for this board"></textarea>
+                </div>
+                <input type="hidden" name="_group" value="{{$group_data->id}}">
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" form="CreateNewBoard">Create Board</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection

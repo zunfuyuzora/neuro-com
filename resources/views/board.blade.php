@@ -57,19 +57,28 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title h5" id="editModalLabel">Change Board Name</h5>
+                    <h5 class="modal-title h5" id="editModalLabel">Edit Board</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" id="editNameForm" class="form-group">
-                        <input type="text" class="form-control" value="Biologi">
+                    <form action="{{route('board.update', $board->id)}}" id="editNameForm" class="form-group">
+                        @csrf
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" value="{{$board->name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="objective">Objective</label>
+                            <textarea name="objective" rows="4" style="resize: none"></textarea>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" form="editNameForm">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="editNameForm">Save Changes</button>
                 </div>
             </div>
         </div>
