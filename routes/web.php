@@ -25,9 +25,10 @@ Route::post('/auth/register', 'Auth\RegisterController@register')->name('registe
 Route::post('/auth/login', 'Auth\LoginController@login')->name('authorize');
 Route::post('/auth/logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('/group', 'GroupController')->middleware('auth')->except('edit');
+Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.settings');
 
 ///DONE
 Route::get('/profile', function() {

@@ -1,36 +1,6 @@
-@extends('extends.dashboard2',['_pagename'=>'Home'])
-
-@section('card-content')
-
-    {{-- 
-        #####
-        ##  WIDE SCREEN - GROUP SELECTION
-        #####
-        --}}
-
-<div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
-    <div class="container py-3">
-        <ul class="list-group">
-            <li class="list-group-item ">
-                <a href="#">Private</a>
-            </li>
-            <li class="list-group-item active">
-                <a href="#">Grup #1</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Kelompok ABC</a>
-            </li>
-        </ul>
-        <div class="form-group">
-        <a href="#" class="my-2 btn btn-primary">
-            Buat Grup
-        </a></div>
-    </div>
-</div>
-@endsection
+@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home')])
 
 @section('main-content')
-
     {{-- 
         #####
         ##  SMALL SCREEN - GROUP SELECTION
@@ -65,12 +35,11 @@
         ##  GROUP ACTION BUTTON
         #####
         --}}
-
+    
     <div id="group-control" class="mb-4 text-center">
         <a href="#" class="btn btn-info">Atur Grup</a>
         <a href="#" class="btn btn-primary">Buat Mading</a>
     </div>
-
     {{-- 
         #####
         ##  MADING
@@ -82,36 +51,33 @@
         style="">
         <ol class="carousel-indicators ball">
             <li data-target="#carousel-mading" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-mading" data-slide-to="1"></li>
-            <li data-target="#carousel-mading" data-slide-to="2"></li>
+            @if (count($magazine)<1)
+            @for ($i=1;$i< count($magazine);i)
+            <li data-target="#carousel-mading" data-slide-to="{{$i}}"></li>
+            @endfor
+            @endif
+
         </ol>
             <div class="carousel-inner">
+                @if (count($magazine)<1)
                 <div class="carousel-item active">
                     <img src="{{ asset('images/wallpaper.jpg') }}" alt="1st Slide" class="d-block"> 
                     <div class="carousel-caption text-left">
-                        <p class="h5 m-0 text-white">New Group</p>
-                        <p class="m-0">Lorem ipsum dolor sit amet</p>
+                        <p class="m-0">Create New Magazine</p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('images/mading-1.jpg') }}" alt="2nd Slide" class="d-block w-100"> 
+                @else
+                @foreach ($magazine as $m)
+                
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/wallpaper.jpg') }}" alt="1st Slide" class="d-block"> 
                     <div class="carousel-caption text-left">
-                        <p class="h5 m-0 text-white">Pembagian Tugas</p>
-                        <p class="m-0">Lorem ipsum dolor sit amet</p>
+                        <p class="m-0">{{$m->caption}}</p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('images/mading-1.jpg') }}" alt="2nd Slide" class="d-block w-100"> 
-                    <div class="carousel-caption text-left">
-                        <p class="h5 m-0 text-white">Review Tugas</p>
-                        <p class="m-0">Lorem ipsum dolor sit amet</p>
-                    </div>
-                </div>
+                @endforeach
+                @endif
             </div>
-            {{-- <a class="carousel-control-prev" href="#carousel-mading" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>  --}}
             <a class="carousel-control-next" href="#carousel-mading" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
@@ -133,18 +99,15 @@
         <p class="h5">Board</p>
             <div class="container horizontal-scrollable"> 
                 <div class="row text-center"> 
+                    @if ($boards)
                     <a href="#" class="col-6 col-md-4 box" style="background:#34B697">
                         <div class="mx-2 text-truncate text-white">
                             Biologi
                         </div>
                     </a> 
-                    <a href="#" class="col-6 col-md-4 box" style="background:#BD3232">
-                        <div class="mx-2 text-truncate text-white">
-                            Sejarah
-                        </div>
-                    </a> 
+                    @endif
                     <a href="#" class="col-6 col-md-4 box create">
-                        Buat baru
+                        Create New
                     </a> 
                 </div> 
             </div> 

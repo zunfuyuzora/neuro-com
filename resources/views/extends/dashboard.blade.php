@@ -66,11 +66,17 @@
                             <div class="wrapper d-flex justify-content-between">
                                 <div class="">
                                     @if ($_pagename != 'Home')
-                                    <a href="{{URL()->previous()}}" class="text-white">
+                                    
+                                    <a href="{{$_backLink}}" class="text-white">
                                         <i class="fa fa-angle-left"></i> Back</a>
                                     @endif
                                 </div>
-                                <div class=""><a href="#" class="text-white text-right">{{ $_pagename}}</a></div>
+                                
+                                @if ($_pagename == 'group')
+                                <div class=""><a href="{{route('group.settings', $group_data->id)}}" title="Group Settings" class="text-white text-right"><i class="fa fa-cog"></i></a></div>
+                                @else
+                                <div class=""><a class="text-white text-right">{{ $_pagename}}</a></div>
+                                @endif
                             </div>
                         </div>
                         <div class="profile-header container bg-white 
@@ -95,19 +101,26 @@
             </div>
             <div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
                 <div class="container py-3">
-                    <ul class="list-group">
-                        <li class="list-group-item active">
-                            <a href="#">Private</a>
-                        </li>
+                    @if ($groups )
+                        
+                    <ul class="list-group"> 
+                        @foreach ($groups as $g)
                         <li class="list-group-item">
-                            <a href="#">Grup #1</a>
+                            <a href="{{route('group.show',$g->group->id)}}">{{$g->group->name}}</a>
                         </li>
-                        <li class="list-group-item">
-                            <a href="#">Kelompok ABC</a>
-                        </li>
+                    @endforeach
+                    
                     </ul>
-                    <a href="#" class="my-2 btn btn-primary form-control">
-                        Buat Grup
+
+                    @else
+
+                    <div class="text-center my-3">
+
+                        Not joined any group
+                    </div>
+                    @endif
+                    <a href="{{route('group.create')}}" class="my-2 btn btn-primary form-control">
+                        Create Group
                     </a>
                 </div>
             </div>
