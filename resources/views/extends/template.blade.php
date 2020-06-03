@@ -18,8 +18,6 @@
   <!-- Custom CSS -->
   <link type="text/css" href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
-  @csrf
-
 </head>
 
 <body style="background-color:#fafafa">

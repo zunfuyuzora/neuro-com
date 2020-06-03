@@ -37,7 +37,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function hasGroups(){
-        $this->hasManyThrough('\Groups','\Members');
+    public function getMemberships(){
+        $this->hasMany('\Members');
     }
 }

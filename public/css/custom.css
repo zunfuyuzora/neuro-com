@@ -1,5 +1,5 @@
-.profile-card  {
-    background-image: url('../images/wallpaper.jpg');
+.profile-card {
+    background-image: url("../images/wallpaper.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -7,7 +7,6 @@
     border: none;
     overflow: hidden;
 }
-
 
 .profile-card .mask {
     z-index: 1;
@@ -44,18 +43,18 @@
 
 hr {
     margin: 0;
-    border: none  !important;
+    border: none !important;
     border-top: 1px solid gray !important;
 }
 
 .item-card {
     max-width: 280px;
     min-width: 280px;
-    margin: 0 .5rem;
+    margin: 0 0.5rem;
 }
 
 .item-card .item-thumbnail {
-    margin: .7rem;
+    margin: 0.7rem;
     width: 260px;
     height: 260px;
     overflow: hidden;
@@ -68,12 +67,11 @@ hr {
 }
 
 .item-card .item-name {
-    margin: 0 .7rem .7rem .7rem ;
+    margin: 0 0.7rem 0.7rem 0.7rem;
     text-overflow: ellipsis;
 }
 
-.item-preview
-{
+.item-preview {
     width: 300px;
     background: grey;
 }
@@ -81,28 +79,28 @@ hr {
     width: 100%;
     height: auto;
 }
-.item-name{
+.item-name {
     text-overflow: ellipsis;
 }
-.item-description{
+.item-description {
     min-height: 100px;
 }
 #body {
     min-height: 30vh;
 }
 
-.auth-page{
-    background-image: url('../img/home.jpg');
+.auth-page {
+    background-image: url("../img/home.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.form-control-alternative[type].auth{
+.form-control-alternative[type].auth {
     background-color: #32363a;
     color: #fff;
     /* border-bottom: 2px #8898aa solid; */
 }
 
-hr{
+hr {
     border: 1.5px solid;
 }
 
@@ -110,7 +108,6 @@ hr{
     position: fixed;
     bottom: 0;
     right: 0;
-    
 }
 .carousel-inner {
     height: 200px;
@@ -129,81 +126,85 @@ hr{
 
 .list-group-item.active a {
     color: #fff;
-  }
+}
 
 .md-text-center-from-left {
     text-align: left;
 }
 
 /* CUSTOM CAROUSEL */
-.carousel-control-next{
+.carousel-control-next {
     transition: background 0.6 ease-in;
     -webkit-transition: background 0.6 ease-in;
 }
 .carousel-control-next:hover {
-    background: rgb(255,255,255,0.2);
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%);
+    background: rgb(255, 255, 255, 0.2);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(0, 0, 0, 1) 100%
+    );
 }
 
 .carousel-caption {
-    left:5%;
+    left: 5%;
 }
 
 .ball {
     margin-bottom: 0;
 }
 
- .ball li {
+.ball li {
     width: 10px;
     height: 10px;
     border-radius: 100%;
     background-color: #fff;
-  }
-  
-  .ball .active {
-    background-color: #34B697;
-  }
-  
-  /* horizontal scrollable */
-  
-  .horizontal-scrollable > .row { 
-    overflow-x: auto; 
-    white-space: nowrap; 
+}
+
+.ball .active {
+    background-color: #34b697;
+}
+
+/* horizontal scrollable */
+
+.horizontal-scrollable > .row {
+    overflow-x: auto;
+    white-space: nowrap;
     flex-wrap: nowrap;
-} 
-  
-.horizontal-scrollable > .row > .box { 
-    display: flex; 
+}
+
+.horizontal-scrollable > .row > .box {
+    display: flex;
     justify-content: center;
     align-items: center;
-    float: none; 
+    float: none;
     height: 100px;
-    margin: .5rem 1rem .5rem 0;
+    margin: 0.5rem 1rem 0.5rem 0;
     border-radius: 5px;
 }
 
 .flex-center-ultra {
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .flex-middle-left {
-    display: flex; 
+    display: flex;
     align-items: center;
 }
 
 .my-status-success {
-    background: #34B697;
+    background: #34b697;
 }
 .my-status-process {
-    background: #DAAF19;
+    background: #daaf19;
 }
 .my-status-failed {
-    background: #BD3232;
+    background: #bd3232;
 }
 
-a.d-block{
+a.d-block {
     transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out;
 }
@@ -212,28 +213,29 @@ a.d-block:hover {
 }
 a.d-block:focus {
     transform: scale(1);
-    outline: 2px solid #34B697;
+    outline: 2px solid #34b697;
 }
 
-a.box.create,.xbox.create {
+a.box.create,
+.xbox.create {
     color: black;
     background: #fff;
     border: 2px dashed black;
-    opacity: .5
+    opacity: 0.5;
 }
 
-a.box.create:focus,.xbox.create {
-    color: rgba(0, 0, 0, 0.600);
+a.box.create:focus,
+.xbox.create {
+    color: rgba(0, 0, 0, 0.6);
     background: #fff;
-    border: 2px dashed rgba(0, 0, 0, 0.600);
-    opacity: .5
+    border: 2px dashed rgba(0, 0, 0, 0.6);
+    opacity: 0.5;
 }
 .xbox.create:hover {
-    text-decoration:underline;
+    text-decoration: underline;
 }
 
 @media (min-width: 576px) {
-
     .carousel-item img {
         height: auto;
         width: 100%;
@@ -251,13 +253,13 @@ a.box.create:focus,.xbox.create {
     }
 
     .profile-card .profile-content img {
-        width:130px;
+        width: 130px;
         height: 130px;
         border: 4px solid rgba(52, 182, 152, 1);
     }
 
     .md-h3 {
-      font-size: 1.75rem;
+        font-size: 1.75rem;
     }
 
     .carousel-inner {

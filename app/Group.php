@@ -13,4 +13,8 @@ class Group extends Model
     public function getMembers(){
         return $this->hasMany('\Member');
     }
+
+    public function getBoards(){
+        return $this->hasMany('\Board');
+    }
 }

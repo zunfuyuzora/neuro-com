@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing');
 });
+
+Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
+Route::get('/signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
+Route::post('/auth/register', 'Auth\RegisterController@register')->name('register');
+Route::post('/auth/login', 'Auth\LoginController@login')->name('authorize');
+Route::post('/auth/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', function() {
     return view('home');

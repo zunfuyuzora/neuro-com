@@ -43,9 +43,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-link-icon" href="#!" onClick="document.getElementById('logout_form').submit()">Keluar</a>
                         <form action="
-                        {{-- {{route('logout')}} --}}
+                        {{route('logout')}}
                         " class="d-none hidden" method="POST" id="logout_form">
                             @csrf
+                            
                             <button type="submit" id="logout_action" class="hidden d-none">logout</button>
                         </form>
                 </li>
