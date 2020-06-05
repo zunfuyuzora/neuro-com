@@ -36,6 +36,12 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request);
+        $request->validate([
+            "taskname"=> 'required',
+            "personInCharge"=> 'required',
+            "description"=> 'required'
+        ]);
     }
 
     /**

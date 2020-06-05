@@ -127,15 +127,23 @@
                     <button class="close" data-dismiss="modal" aria-label="close" type="button">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="" class="form-group" id="createTaskForm">
+                    <form action="{{route('task.store')}}" class="form-group" id="createTaskForm" method="POST">
                         <div class="row">
+                            @csrf
                             <div class="col-12 mb-2">
                                 <label for="taskname">Task Name</label>
                                 <input type="text" name="taskname" id="taskname" aria-label="Task Name" class="form-control">
                             </div>
                             <div class="col-12 mb-2">
                                 <label for="personInCharge">Person in Charge</label>
-                                <input type="text" name="personInCharge" id="personInCharge" aria-label="Person In Charge" class="form-control">
+                                <select name="personInCharge" id="personInCharge" class="form-control">
+                                    @foreach ($member as $m)
+                                        
+                                    <option value="{{$m->id}}">
+                                        {{$m->user->full_name." @".$m->user->username." [".$m->access."]"}}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-12 mb-2">
                                 <label for="description">Description</label>

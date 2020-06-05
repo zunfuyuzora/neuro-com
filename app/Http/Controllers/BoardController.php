@@ -63,7 +63,8 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        return view('board.show', ['board'=>$board]);
+        $member = Member::where('group_id', $board->group_id)->get();
+        return view('board.show', ['board'=>$board,'member'=>$member]);
     }
 
     /**
