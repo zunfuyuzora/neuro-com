@@ -127,7 +127,7 @@
                     <button class="close" data-dismiss="modal" aria-label="close" type="button">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('task.store')}}" class="form-group" id="createTaskForm" method="POST">
+                    <form action="{{route('task.store', 'task')}}" class="form-group" id="createTaskForm" method="POST">
                         <div class="row">
                             @csrf
                             <div class="col-12 mb-2">

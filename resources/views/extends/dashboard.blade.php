@@ -85,13 +85,11 @@
                                 <img src="{{ asset('/images/user-1.jpeg') }}
                                 {{-- {{ asset('img/'.Auth::user()->avatar)}} --}}" alt="" class="rounded-circle position-relative" style="margin-top: -60px">
                                 <div class="wrapper md-text-center-from-left  ml-2 py-4" >
-                                <p class="h5 md-h3 font-weight-bold m-0">
-                                    {{-- {{Auth::user()->username}} --}}
-                                    Akane Georgia
+                                <p class="h5 md-h3 font-weight-bold m-0 text-capitalize">
+                                    {{Auth::user()->full_name}}
                                 </p>
                                 <span class="color: #7A7A7A">
-                                    {{-- {{Auth::user()->username}} --}}
-                                    @akane153
+                                    {{"@".Auth::user()->username}}
                                 </span>
                                 </div>
                             </div>

@@ -20,7 +20,7 @@ class CreateContentsTable extends Migration
             $table->foreign('member_id')->references('id')->on('members');
             $table->foreign('group_id')->references('id')->on('groups');
             $table->text('caption');
-            $table->enum('type',['magazine','module']);
+            $table->enum('type',['magazine','module', 'task']);
             $table->timestamps();
             $table->softDeletes();
         });

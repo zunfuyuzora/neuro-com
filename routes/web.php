@@ -32,7 +32,7 @@ Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.setti
 
 Route::resource('/board', 'BoardController')->except('create','edit');
 
-Route::resource('/task', 'TaskController')->except('create');
+Route::resource('/content', 'ContentController')->except('create');
 ///DONE
 Route::get('/profile', function() {
     return view('profile');
