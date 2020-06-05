@@ -14,9 +14,9 @@ class CreateContentsTable extends Migration
     public function up()
     {
         Schema::create('contents', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('member_id');
-            $table->unsignedBigInteger('group_id');
+            $table->char('id')->primary();
+            $table->char('member_id');
+            $table->char('group_id'); 
             $table->foreign('member_id')->references('id')->on('members');
             $table->foreign('group_id')->references('id')->on('groups');
             $table->text('caption');

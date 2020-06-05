@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupsTable extends Migration
+class CreateProgressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('progress', function (Blueprint $table) {
             $table->char('id')->primary();
-            $table->string('name');
-            $table->string('description');
-            $table->string('avatar')->default('default.jpg');
+            $table->char('content_id');
+            $table->foreign('content_id')->references('id')->on('contents');
+            $table->enum('status', ['fresh', 'ongoing', 'finish']);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('progress');
     }
 }

@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
+    public $incrementing = false;
     protected $fillable = [
-        'user_id', 'access', 'group_id', 'status'
+        'id', 'user_id', 'group_id', 'access',  'status'
     ];
     public function group(){
         return $this->belongsTo('App\Group');

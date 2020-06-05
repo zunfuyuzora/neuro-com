@@ -46,6 +46,7 @@ class BoardController extends Controller
         $x = Member::where('group_id', $request->_group)->where('user_id', Auth::user()->id)->first();
 
         $newBoard = Board::create([
+            "id" => "brd".date("mds").rand(000,999),
             "member_id" => $x->id,
             "group_id" => $x->group_id,
             "name" => $request->name,

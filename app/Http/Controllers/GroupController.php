@@ -44,22 +44,29 @@ class GroupController extends Controller
             'name' => ['required', 'string', 'max:30'],
             'description' => ['required', 'string', 'max:255']
         ]);
+        $code = date("mds").rand(000,999);
+        $idgroup = "grp".$code;
+        $idmember = "mbr".$code;
+        $idcontent = "mag".$code;
 
         $newGroup = Group::create([
+            "id" => $idgroup,
             "name" => $request->name,
             "description" => $request->description,
         ]);
 
         $newMember = Member::create([
+            "id" => $idmember,
             "user_id" => Auth::user()->id,
-            "group_id" => $newGroup->id,
+            "group_id" => $idgroup,
             "access" => "creator",
             "status" => true,
         ]);
 
         Content::create([
-            "member_id" => $newMember->id,
-            "group_id" => $newGroup->id,
+            "id" => $idcontent,
+            "member_id" => $idmember,
+            "group_id" => $idgroup,
             "caption" => "NEW GROUP. Getting started. Here is what to know about groups",
             "type" => "magazine"
         ]);

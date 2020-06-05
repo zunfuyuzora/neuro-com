@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+    public $incrementing = false;
     protected $fillable = [
-        "name","description","avatar"
+        "id","name","description","avatar"
     ];
 
     public function getMembers(){

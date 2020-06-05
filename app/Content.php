@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Content extends Model
 {
+    public $incrementing = false;
     protected $fillable = [
-        "member_id", "group_id", "caption", "type"
+        "id","member_id", "group_id", "caption", "type"
     ];
 
 }

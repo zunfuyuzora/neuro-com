@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
 {
-    public $fillable = [
-        'name','objective','member_id','group_id'
+    public $incrementing = false;
+    protected $fillable = [
+        'id','name','objective','member_id','group_id'
     ];
 
     public function group() {

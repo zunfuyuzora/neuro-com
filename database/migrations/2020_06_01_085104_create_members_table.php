@@ -14,9 +14,9 @@ class CreateMembersTable extends Migration
     public function up()
     {
         Schema::create('members', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('group_id');
+            $table->char('id')->primary();
+            $table->char('user_id');
+            $table->char('group_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('groups');
             $table->enum('access', ["creator","moderator","member"]);
