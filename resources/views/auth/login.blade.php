@@ -47,6 +47,8 @@
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>
+                                    <a href="{{route('signup')}}" class="text-underline text-white">
+                                       <small> Dont have account yet? </small></a>
                                 </div>
                             </div>
 
@@ -66,7 +68,7 @@
                         </form>
             </div></div>
         </div>
-        <div class="col-md-8 bg-white v-100">
+        <div class="hero-section col-md-8 bg-white v-100">
         </div>
     </div>
 </div>

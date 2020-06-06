@@ -12,7 +12,7 @@
                     <p>Finish this up and getting close to bunch of cool features of <strong>Neuro Gustione</strong></p>
                 </div>
                 <div class="container mx-5">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" id="register" action="{{ route('register') }}">
                             @csrf
                             <div class="row">
                             <div class="col-6">
@@ -55,8 +55,7 @@
                             <div class="form-group">
                                 <label for="email" class="col-form-label text-white">{{ __('E-Mail Address') }}</label>
     
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
-    
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -93,9 +92,13 @@
                         </div>
                     </div>
                         </form>
+                        
+                        <div class="text-white">
+                            <a href="{{route('login')}}" class="text-white text-underline">Already have an account?</a>
+                        </div>
             </div></div>
         </div>
-        <div class="col-md-5 bg-white v-100">
+        <div class="col-md-5 bg-signup v-100">
         </div>
     </div>
 </div>

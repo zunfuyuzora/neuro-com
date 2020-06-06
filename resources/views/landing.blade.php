@@ -4,7 +4,7 @@
 @endpush
 @section('screen')
     
-<nav class="navbar navbar-overlay navbar-dark headroom bg-transparent">
+<nav class="navbar navbar-landing navbar-overlay navbar-dark headroom bg-transparent">
         <div class="container">
             <a class="navbar-brand h3" href="{{route('home')}}">
                 {{-- <img src="{{ asset('images/sample-logo.png')}}" alt=""> --}}
@@ -16,11 +16,6 @@
             <div class="collapse navbar-collapse" id="navbar-primary">
                 <div class="navbar-collapse-header">
                     <div class="row">
-                        <div class="col-6 collapse-brand">
-                            <a href="">
-                                Dashboard
-                            </a>
-                        </div>
                         <div class="col-6 collapse-close">
                             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                                 <span></span>
@@ -33,15 +28,11 @@
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="#">
-                            <span class="nav-link-inner-text">Board</span></a>
+                            <span class="nav-link-inner-text">Home</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="#">
-                            <span class="nav-link-inner-text">Profil</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-icon" href="#">
-                            <span class="nav-link-inner-text">Modul</span></a>
+                            <span class="nav-link-inner-text">About</span></a>
                     </li>
                 </ul>
     
@@ -52,11 +43,11 @@
 <div class="hero-section py-5 ">
     <div class="container">
         <div class="row">
-            <div class="pt-5 mt-5 text-white col-12 col-md-8">
-                    <div class="display-4">Berkolaborasi dengan Tim menggunakan Neuro</div>
+            <div class="py-5 mt-5 text-white col-12 col-md-8">
+                    <div class="display-4">Get Collaborate with your team now by Neuro</div>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa libero, explicabo accusantium cupiditate, aliquid tempora incidunt asperiores ipsum.</p>
-                    <a href="#" class="btn btn-primary">Daftar Sekarang</a>
-                    <a href="#" class="ml-3 text-white text-underline">Masuk</a>
+                    <a href="{{route('signup')}}" class="btn btn-primary">Sign Up Now</a>
+                    <a href="{{route('login')}}" class="ml-3 text-white text-underline">Login</a>
                 </div>
         </div>
     </div>
@@ -64,7 +55,7 @@
 
 <div id="section-1" class=" bg-blue">
     <div class="container text-center text-white p-md-5 p-3">
-        <div class="display-2">Apa yang kami tawarkan?</div>
+        <div class="display-2">What is Neuro all about ?</div>
     </div>
 </div>
 
@@ -74,7 +65,7 @@
             <div class="row align-items-center">
             <div class="col-12 col-md-6 order-0">
                 <div class="illust">
-                    <img src="{{asset('./images/illust-1.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('images/illust-1.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="col-12 col-md-6 order-1 p-3 text-md-left text-center">
@@ -83,7 +74,7 @@
             </div>
             <div class="col-12 col-md-6 order-md-3 order-2">
                 <div class="illust">
-                    <img src="{{asset('./images/illust-2.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('images/illust-2.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-3 p-3 text-md-left text-center">
@@ -92,7 +83,7 @@
             </div>
             <div class="col-12 col-md-6 order-4">
                 <div class="illust">
-                    <img src="{{asset('./images/illust-3.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('images/illust-3.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
             <div class="col-12 col-md-6 order-5 p-3 text-md-left text-center">
@@ -106,7 +97,7 @@
 
 <div id="section-3" class="section-3">
     <div class="container text-center text-white p-5">
-        <div class="display-2 m-md-5 m-2">Selalu terhubung dengan Neuro
+        <div class="display-2 m-md-5 m-2">Always connect with Neuro
         </div>
     </div>
 </div>
@@ -117,11 +108,11 @@
     <p style="color:gray" class="w-md-25 px-3 w-100">
         Sed labore assumenda rem? Voluptates velit nesciunt quaerat consequatur asperiores.
     </p>
-    <form action="" autocomplete="off" class="form-group d-flex justify-content-center">
+    <form action="{{route('signup')}}" autocomplete="off" class="form-group d-flex justify-content-center">
         <div class="input-group col-12 col-md-6">
             <input type="text" name="email" placeholder="Masukkan email" class="form-control">
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Daftar</button>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
             </div>
         </div>
     </form>
@@ -132,16 +123,15 @@
     <div class="container p-md-5 py-5 p-2">
         <div class="row text-white justify-content-around">
             <div class="col-md-3 col-2">
-                <img src="{{asset('./images/sample-logo.png')}}" alt="[Logo]" class="img-fluid">
+                <img src="{{asset('images/sample-logo.png')}}" alt="[Logo]" class="img-fluid">
             </div>
             <div class="col-3">
-                <a href="#" class="text-white">Pembayaran</a><br>
-                <a href="#" class="text-white">Tentang Kami</a><br>
-                <a href="#" class="text-white">Bantuan</a>
+                <a href="#" class="text-white">About us</a><br>
+                <a href="#" class="text-white">Help</a>
             </div>
             <div class="col-3">
-                <a href="#" class="text-white">Masuk</a><br>
-                <a href="#" class="text-white">Daftar</a>
+                <a href="{{route('login')}}" class="text-white">Login</a><br>
+                <a href="{{route('signup')}}" class="text-white">Signup</a>
             </div>
         </div>
     </div>
