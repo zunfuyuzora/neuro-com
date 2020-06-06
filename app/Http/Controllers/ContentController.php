@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Member;
 use App\Content;
+use App\Progress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
 {
@@ -35,7 +39,58 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->type == 'task'){
+            $request->validate([
+                'taskname'=> 'required',
+                'personInCharge' => 'required',
+                'description' => 'required',
+                'board' => 'required',
+                'group' => 'required',
+            ]);
+            
+            $code = date("mds").rand(000,999);
+            $idtask = "task".$code;
+            $idprg = "prg".$code;
+
+            Content::create([
+                'id' => $idtask,
+                'member_id' => $request->personInCharge,
+                'board_id' => $request->board,
+                'group_id' => $request->group,
+                'head' => $request->taskname,
+                'body' => $request->description,
+                'type' => $request->type
+            ]);
+
+            Progress::create([
+                'id' => $idprg,
+                'content_id' => $idtask,
+                'progress' => 'fresh'
+            ]);
+
+            return redirect(route('board.show', $request->board));
+        }else if ($request->type == 'magazine') {
+            $request->validate([
+                'head' => 'required',
+                'body' => 'required',
+                'type' => 'required',
+                'group' => 'required',
+            ]);
+            $code = date("mds").rand(000,999);
+            $idmag = "mag".$code;
+            $member = Member::where('group_id', $request->group)
+            ->where('user_id', Auth::user()->id)->first();
+
+            Content::create([
+                'id' => $idmag,
+                'member_id' => $member->id,
+                'group_id' => $request->group,
+                'head' => $request->head,
+                'body' => $request->body,
+                'type' => $request->type,
+            ]);
+            return redirect(route('mading.show',$idmag));
+        }
     }
 
     /**
@@ -49,6 +104,17 @@ class ContentController extends Controller
         //
     }
 
+    public function mading(Content $content)
+    {
+        $comments =  Comment::where('content_id', $content->id)->get();
+        return view('mading.show', ['mading' => $content, 'comments' => $comments]);
+    }
+
+    public function taskShow(Content $content)
+    {
+        $comments =  Comment::where('content_id', $content->id)->get();
+        return view('task.show', ['task' => $content, 'comments' => $comments]);
+    }
     /**
      * Show the form for editing the specified resource.
      *

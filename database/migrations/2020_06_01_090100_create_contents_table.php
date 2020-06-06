@@ -16,10 +16,13 @@ class CreateContentsTable extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->char('id')->primary();
             $table->char('member_id');
+            $table->char('board_id')->nullable();
             $table->char('group_id'); 
             $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('board_id')->references('id')->on('boards');
             $table->foreign('group_id')->references('id')->on('groups');
-            $table->text('caption');
+            $table->text('head');
+            $table->text('body');
             $table->enum('type',['magazine','module', 'task']);
             $table->timestamps();
             $table->softDeletes();

@@ -202,14 +202,14 @@ hr {
     align-items: center;
 }
 
-.my-status-success {
+.finish {
     background: #34b697;
 }
-.my-status-process {
+.ongoing {
     background: #daaf19;
 }
-.my-status-failed {
-    background: #bd3232;
+.fresh {
+    background: #6d6d6d;
 }
 
 a.d-block {

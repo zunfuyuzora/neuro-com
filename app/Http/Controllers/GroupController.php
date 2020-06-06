@@ -67,7 +67,8 @@ class GroupController extends Controller
             "id" => $idcontent,
             "member_id" => $idmember,
             "group_id" => $idgroup,
-            "caption" => "NEW GROUP. Getting started. Here is what to know about groups",
+            "head"=> "New Group Created",
+            "body" => "Getting started. Here is what to know about groups",
             "type" => "magazine"
         ]);
 
@@ -82,7 +83,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $magazine = Content::where('group_id', $group->id)->get();
+        $magazine = Content::where('group_id', $group->id)->where('type','magazine')->get();
         $board = Board::where('group_id',$group->id)->get();
         return view('group.show', ['group_data' => $group, 'magazine' => $magazine,'board'=>$board]);
     }

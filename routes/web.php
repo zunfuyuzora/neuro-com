@@ -33,6 +33,10 @@ Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.setti
 Route::resource('/board', 'BoardController')->except('create','edit');
 
 Route::resource('/content', 'ContentController')->except('create');
+Route::get('/mading/{content}', 'ContentController@mading')->name('mading.show');
+Route::get('/task/{content}', 'ContentController@taskShow')->name('task.show');
+Route::post('/comment','CommentController@store')->name('comment.store');
+
 ///DONE
 Route::get('/profile', function() {
     return view('profile');

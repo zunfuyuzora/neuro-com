@@ -6,6 +6,7 @@ use App\Board;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Member;
+use App\Content;
 
 class BoardController extends Controller
 {
@@ -65,7 +66,8 @@ class BoardController extends Controller
     public function show(Board $board)
     {
         $member = Member::where('group_id', $board->group_id)->get();
-        return view('board.show', ['board'=>$board,'member'=>$member]);
+        $task = Content::where('type', 'task')->where('board_id', $board->id)->get();
+        return view('board.show', ['board'=>$board,'member'=>$member,'task'=>$task]);
     }
 
     /**

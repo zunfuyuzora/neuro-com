@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class CommentController extends Controller
 {
@@ -35,7 +38,25 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'group_id' => 'required',
+            'comment' => 'required',
+            'content' => 'required'
+        ]);
+
+        $code = date("mds").rand(000,999);
+        $idcomment = "cmnt".$code;
+
+        $member = Member::where('user_id', Auth::user()->id)
+        ->where('group_id', $request->group_id)->first();
+
+        Comment::create([
+            'id' => $idcomment,
+            'member_id' => $member->id,
+            'content_id' => $request->content,
+            'text' => $request->comment
+        ]);
+        return redirect(URL::previous());
     }
 
     /**

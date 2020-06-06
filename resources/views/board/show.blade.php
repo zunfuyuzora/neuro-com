@@ -1,4 +1,4 @@
-@extends('extends.dashboard',['_pagename'=>'Group','_backLink'=>route('group.show', $board->group_id)])
+@extends('extends.dashboard',['_pagename'=>'Board','_backLink'=>route('group.show', $board->group_id)])
 
 @section('card-content')
 
@@ -87,23 +87,26 @@
         <div class="container">
 {{--  --}}
     {{--  --}}
-    @if (isset($task))
-        
-        <a href="#" class="d-block task-item mx-4 my-3">
+    @if (count($task) >= 1)
+        @foreach ($task as $t)
+            
+        <a href="{{route('task.show', $t->id)}}" class="d-block task-item mx-4 my-3">
             <div class="row no-gutters rounded overflow-hidden shadow-sm">
                 <div class="col-2 rounded-left">
                     <img src="{{ asset('./images/user-3.jpg') }}" alt="[Ava]" class="img-fluid position-relative" style="top:0;bottom:0;left:0;right:0;">
                 </div>
             <div class="col-8 flex-middle-left py-2 px-3">
                 <div class="wrappers text-truncate">
-                    <p class="h6 m-0" style="color:gray">Mina</p>
-                    <p class="h5 m-0">Presentasi</p>
+                    <p class="h6 m-0" style="color:gray">{{$t->head}}</p>
+                    <p class="h5 m-0">{{$t->body}}</p>
                 </div>
             </div>
-            <div class="col-2 rounded-right my-status-success flex-center-ultra text-white">
-                    <span class="percentage">100</span></div>
+            <div class="col-2 rounded-right {{$t->progress->status}} flex-center-ultra text-white">
+            <span class="text-capitalize">{{$t->progress->status}}</span></div>
             </div>
         </a>
+        
+        @endforeach
         @else
         <div class="text-center my-5">
             There is no task in this board
@@ -127,9 +130,12 @@
                     <button class="close" data-dismiss="modal" aria-label="close" type="button">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('task.store', 'task')}}" class="form-group" id="createTaskForm" method="POST">
+                    <form action="{{route('content.store')}}" class="form-group" id="createTaskForm" method="POST">
                         <div class="row">
                             @csrf
+                            <input type="hidden" name="type" value="task">
+                            <input type="hidden" name="board" value="{{$board->id}}">
+                            <input type="hidden" name="group" value="{{$board->group_id}}">
                             <div class="col-12 mb-2">
                                 <label for="taskname">Task Name</label>
                                 <input type="text" name="taskname" id="taskname" aria-label="Task Name" class="form-control">

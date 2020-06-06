@@ -37,8 +37,8 @@
         --}}
     
     <div id="group-control" class="mb-4 text-center">
-        <a href="#" class="btn btn-info">Atur Grup</a>
-        <a href="#" class="btn btn-primary">Buat Mading</a>
+        <a href="#" class="btn btn-info">Group Chat</a>
+        <a href="#createMagazine" data-toggle="modal" data-target="#createMagazine" class="btn btn-primary">Create Magazine</a>
     </div>
     {{-- 
         #####
@@ -51,8 +51,8 @@
         style="">
         <ol class="carousel-indicators ball">
             <li data-target="#carousel-mading" data-slide-to="0" class="active"></li>
-            @if (count($magazine)<1)
-            @for ($i=1;$i< count($magazine);i)
+            @if (count($magazine)>1)
+            @for ($i=1;$i< count($magazine);$i++)
             <li data-target="#carousel-mading" data-slide-to="{{$i}}"></li>
             @endfor
             @endif
@@ -67,14 +67,17 @@
                     </div>
                 </div>
                 @else
+                <?php $active = 'active' ?>
                 @foreach ($magazine as $m)
-                
-                <div class="carousel-item active">
+                <div class="carousel-item {{$active}}">
+                    <a href="{{route('mading.show', $m->id)}}">
                     <img src="{{ asset('images/wallpaper.jpg') }}" alt="1st Slide" class="d-block"> 
                     <div class="carousel-caption text-left">
-                        <p class="m-0">{{$m->caption}}</p>
+                        <p class="h3 text-white">{{$m->head}}</p>
                     </div>
+                </a>
                 </div>
+                <?php $active = ''?>
                 @endforeach
                 @endif
             </div>
@@ -163,13 +166,46 @@
                 </tr>
                 @else
                 <tr>
-                    <td class="text-center">No Highlight for This Group</td>
+                    <td class="text-center">No Module for This Group</td>
                 </tr>
                 @endif
             </table>
         </div>
     </div>
 </div>
+{{-- MODAL MADING PAGE --}}
+
+<div class="modal fade" tabindex="-1" role="dialog" id="createMagazine">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Magazine</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('content.store')}}" method="POST" id="CreateNewMagazine">
+                @csrf
+                <div class="form-group">
+                    <label for="head">Header</label>
+                    <input type="text" id="head" name="head" class="form-control" placeholder="Header line">
+                </div>
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <textarea rows="4" id="body" name="body" class="form-control" style="resize: none" placeholder="Type everything you want to tell here.."></textarea>
+                </div>
+                <input type="hidden" name="group" value="{{$group_data->id}}">
+                <input type="hidden" name="type" value="magazine">
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" form="CreateNewMagazine">Create Magazine</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {{-- MODAL PAGE --}}
 
 <div class="modal fade" tabindex="-1" role="dialog" id="newBoardModal">

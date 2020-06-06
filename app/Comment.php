@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    public $incrementing = false;
     public $fillable = [
-        'text'
+        'id', 'text', 'member_id', 'content_id'
     ];
 
     public function commentTo(){
-        if ($content = $this->belongsToMany('\Content')) {
-            return $content;
-        }else {
-            return $this->belongsToMany('\Task');
-        }
+        return $this->belongsTo('App\Content');
+    }
+    public function member(){
+        return $this->belongsTo('App\Member');
     }
 }
