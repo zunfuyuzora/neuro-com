@@ -29,6 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/group', 'GroupController')->middleware('auth')->except('edit');
 Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.settings');
+Route::get('/group/{group}/chat', 'GroupController@chat')->name('group.chat');
 
 Route::resource('/board', 'BoardController')->except('create','edit');
 

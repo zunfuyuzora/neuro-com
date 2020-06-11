@@ -37,7 +37,7 @@
         --}}
     
     <div id="group-control" class="mb-4 text-center">
-        <a href="#" class="btn btn-info">Group Chat</a>
+        <a href="{{ route('group.chat', $group_data->id) }}" class="btn btn-info">Group Chat</a>
         <a href="#createMagazine" data-toggle="modal" data-target="#createMagazine" class="btn btn-primary">Create Magazine</a>
     </div>
     {{-- 
@@ -239,3 +239,13 @@
     </div>
   </div>
 @endsection
+@push('script')
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io('localhost:8000');
+        socket.on('news', (data)=>{
+            console.log(data);
+            socket.emit('event')=>{my:data};
+        })
+    </script>
+@endpush

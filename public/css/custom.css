@@ -282,6 +282,59 @@ a.box.create:focus,
     text-decoration: underline;
 }
 
+/* GROUP CHAT */
+.group_chat {
+    min-height: 60vh;
+    max-height: 60vh;
+    background-color: rgb(0, 0, 0, 0.1);
+    padding-bottom: 12px;
+    overflow: auto;
+}
+.chat-form form {
+    display: flex;
+}
+
+.chat-form form textarea {
+    resize: none;
+}
+
+.group_chat .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    display: flex;
+}
+
+.message .wrapper {
+    background-color: #fff;
+    margin: 0.3em 0;
+    padding: 0.3em 1em;
+    border-radius: 0.6rem;
+}
+
+.message .user {
+    font-size: 0.7em;
+    color: #34b697;
+    font-weight: bold;
+}
+
+.message .text {
+    padding: 0.2em 0;
+}
+
+.message .time {
+    text-align: right;
+    font-size: 0.5em;
+    color: gray;
+}
+
+.message.self {
+    justify-content: flex-end;
+}
+
 @media (min-width: 576px) {
     .carousel-item img {
         height: auto;

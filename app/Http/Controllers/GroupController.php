@@ -131,4 +131,15 @@ class GroupController extends Controller
     {
         dd($group);
     }
+
+    /**
+     * Group Chat Index Request
+     * 
+     */
+    public function chat(Group $group)
+    {
+        $uid = Auth::user()->id;
+        $member = Member::where('group_id', $group->id)->where('user_id', $uid)->first();
+        return view('group.chat', ['group_data' => $group, 'member'=>$member]);
+    }
 }
