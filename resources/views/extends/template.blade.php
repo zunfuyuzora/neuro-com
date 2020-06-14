@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="{{ asset('css/argon/argon.css') }}">
   <!-- Custom CSS -->
   <link type="text/css" href="{{ asset('css/custom.css') }}" rel="stylesheet">
-
+@stack('css')
 </head>
 
 <body style="background-color:#fafafa">

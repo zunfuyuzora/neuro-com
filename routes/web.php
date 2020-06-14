@@ -38,6 +38,10 @@ Route::get('/mading/{content}', 'ContentController@mading')->name('mading.show')
 Route::get('/task/{content}', 'ContentController@taskShow')->name('task.show');
 Route::post('/comment','CommentController@store')->name('comment.store');
 
+Route::middleware(['admin'])->group(function (){
+    Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+});
+
 ///DONE
 Route::get('/profile', function() {
     return view('profile');

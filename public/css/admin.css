@@ -1,0 +1,25 @@
+#admin-sidebar {
+    background-color: #164b3f;
+}
+
+#admin-sidebar .profile{
+    display: flex;
+    padding: 1rem;
+    color:white;
+}
+
+#admin-sidebar .profile .container{
+    display: flex;
+}
+
+.control-panel div a.list-group-item {
+    background-color: transparent;
+    border: none;
+    color: white;
+    transition: .2s ease-in-out;
+}
+
+.control-panel div a.list-group-item:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
