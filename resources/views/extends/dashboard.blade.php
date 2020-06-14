@@ -99,11 +99,13 @@
             </div>
             <div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
                 <div class="container py-3">
-                    @if ($groups )
+                    @if ($groups)
                         
                     <ul class="list-group"> 
                         @foreach ($groups as $g)
-                        <li class="list-group-item">
+                        <li class="list-group-item {{
+                            isset($groupId) ? ($groupId == $g->group->id ? "active" : "") : ""
+                        }}">
                             <a href="{{route('group.show',$g->group->id)}}">{{$g->group->name}}</a>
                         </li>
                     @endforeach

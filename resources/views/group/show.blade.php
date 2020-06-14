@@ -1,4 +1,4 @@
-@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home')])
+@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home'), 'groupId'=>$group_data->id])
 
 @section('main-content')
     {{-- 

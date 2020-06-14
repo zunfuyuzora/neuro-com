@@ -39,7 +39,11 @@ Route::get('/task/{content}', 'ContentController@taskShow')->name('task.show');
 Route::post('/comment','CommentController@store')->name('comment.store');
 
 Route::middleware(['admin'])->group(function (){
-    Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+    Route::get('/dashboard', 'HomeController@dashboard')->name('admin.dashboard');
+    Route::get('/manage/group/', 'AdminController@group')->name('admin.group');
+    Route::get('/manage/group/{group}', 'AdminController@groupDetail')->name('admin.group.detail');
+    Route::get('/manage/user/', 'AdminController@user')->name('admin.user');
+    Route::get('/manage/user/{user}', 'AdminController@userDetail')->name('admin.user.detail');
 });
 
 ///DONE

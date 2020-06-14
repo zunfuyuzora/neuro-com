@@ -12,10 +12,10 @@ class Group extends Model
     ];
 
     public function getMembers(){
-        return $this->hasMany('\Member');
+        return $this->hasMany('App\Member');
     }
 
     public function getBoards(){
-        return $this->hasMany('\Board');
+        return $this->hasMany('App\Board');
     }
 }

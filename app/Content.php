@@ -26,4 +26,9 @@ class Content extends Model
     {
         return $this->HasOne('App\Progress');
     }
+
+    public function board()
+    {
+        return $this->belongsTo('App\Board');
+    }
 }

@@ -20,7 +20,7 @@
 @stack('css')
 </head>
 
-<body style="background-color:#fafafa">
+<body style="background-color:#e0e0e0">
 
   {{-- {{ csrf_token() }} --}}
   @yield('screen')

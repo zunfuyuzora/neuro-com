@@ -1,4 +1,4 @@
-@extends('extends.dashboard',['_pagename'=>'Board','_backLink'=>route('group.show', $board->group_id)])
+@extends('extends.dashboard',['_pagename'=>'Board','_backLink'=>route('group.show', $board->group_id),'groupId'=>$board->group_id])
 
 @section('card-content')
 

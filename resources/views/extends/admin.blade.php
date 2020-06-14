@@ -5,47 +5,62 @@
 @section('screen')
 <div id="body" class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 col-md-5 col-lg-3 p-0">
-            <div id="admin-sidebar" class="mb-3">
+        <div class="col-sm-12 col-md-3 col-lg-2 p-0">
+            <div id="admin-sidebar">
+                <div>
                 <div class="profile">
-                    <div class="container">
                     <div class="text-capitalize">{{Auth::user()->full_name}}</div>
                 </div>
-            </div>
                 <div class="control-panel">
-                    
                     <div class="list-group bg-transparent">
-                        <a class="list-group-item">
+                        <a href="{{route('admin.dashboard')}}" class="list-group-item
+                        {{$_page == "home" ? "active" : ""}}
+                        ">
                             Home
                         </a>
-                        <a class="list-group-item">
+                        <a href="{{route('admin.group')}}" class="list-group-item
+                        {{$_page == "group" ? "active" : ""}}
+                        ">
                             Group
                         </a>
-                        <a class="list-group-item">
+                        <a href="{{route('admin.user')}}" class="list-group-item
+                        {{$_page == "user" ? "active" : ""}}
+                        ">
                             User
                         </a>
                     </div>
                 </div>
             </div>
+                <div class="control-panel">
+                    <div class="list-group bg-transparent">
+                        <a href="#" onclick="document.getElementById('logout_form').submit()" class="list-group-item">
+                            Logout
+                        </a>
+                        <form action="
+                        {{route('logout')}}
+                        " class="d-none hidden" method="POST" id="logout_form">
+                            @csrf
+                            
+                            <button type="submit" id="logout_action" class="hidden d-none">logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="main_content" class="col-sm-12 col-md-6 col-lg-9 p-0 ">
+        <div id="main_content" class="col-sm-12 col-md-9 col-lg-10 p-0 ">
 
-            <nav class="navbar navbar-dark bg-primary">
+            <nav id="admin-dashboard" class="navbar navbar-dark bg-primary">
                 <div class="container">
-                    <div class="navbar-brand">Neuro Administrator</div>
-                    <a href="" class="text-white">Logout</a>
+                        <span class="text-white"> Administrator
+                        </span>
                 </div>
             </nav>
-            
-            @yield('main-content')
+            <div id="content">
+                
+                @yield('main-content')
+            </div>
 
         </div>
-    </div>
-</div>
-
-<div id="footer" class="bg-dark p-4 mt-5" style="bottom:0;">
-    <div class="container text-white">
-        <div class="text-center">copyright@2020</div>
     </div>
 </div>
 @endsection

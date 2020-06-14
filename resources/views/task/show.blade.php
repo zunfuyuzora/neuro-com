@@ -1,4 +1,4 @@
-@extends('extends.dashboard',['_pagename'=>'Task','_backLink'=> route('board.show', $task->board_id)])
+@extends('extends.dashboard',['_pagename'=>'Task','_backLink'=> route('board.show', $task->board_id),'groupId'=>$task->board->group_id])
 
 @section('card-content')
 
