@@ -97,8 +97,8 @@
                 </div>
             <div class="col-8 flex-middle-left py-2 px-3">
                 <div class="wrappers text-truncate">
-                    <p class="h6 m-0" style="color:gray">{{$t->head}}</p>
-                    <p class="h5 m-0">{{$t->body}}</p>
+                    <p class="h6 m-0" style="color:gray">{{$t->member->user->full_name}}</p>
+                    <p class="h5 m-0">{{$t->head}}</p>
                 </div>
             </div>
             <div class="col-2 rounded-right {{$t->progress->status}} flex-center-ultra text-white">

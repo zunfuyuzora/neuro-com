@@ -9,6 +9,7 @@ use App\Board;
 use App\Group;
 use App\Content;
 use App\Comment;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -31,7 +32,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $uid = Auth::user()->id;
+        $memberships = Member::where('user_id', $uid)->get();
+        $allTask = new Collection();
+        $allBoard = new Collection();
+
+        foreach ($memberships as $member) {
+            $task = Content::where('type','task')
+                            ->where('member_id', $member->id)->get(); 
+                                     
+            $board = Board::where('member_id', $member->id)->get();
+            
+            $allTask = $allTask->merge($task);
+            $allBoard = $allBoard->merge($board);
+
+        }
+        return view('home', ['highlight'=>$allTask,'board'=>$allBoard]);
     }
 
     public function dashboard()

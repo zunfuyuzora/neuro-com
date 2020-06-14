@@ -130,11 +130,14 @@
         <div class="container my-3 p-0">
             
             @if (isset($highlight))
-                    
+            @foreach ($highlight as $h)
             <div class="py-2 px-3 mb-3 rounded" style="background-color:#34B697">
-                <a href="#" class="d-block m-2 py-2 px-3 bg-white text- text-dark">Rangkuman Materi</a>
-                <p class="h6 mx-2 font-weight-bold text-truncate text-white">Biologi</p>
+                <a href="#" class="d-block m-2 py-2 px-3 bg-white text- text-dark">{{$h->head}}</a>
+                <p class="h6 mx-2 font-weight-bold text-truncate text-white">Board : {{$h->board->name}}</p>
             </div>
+
+            @endforeach                    
+
             @else
             <div class="text-center">There is no Highlight for this moment</div>
             @endif

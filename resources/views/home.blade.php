@@ -59,17 +59,25 @@
 
 <div class="container d-flex flex-column justify-content-center bg-white py-4 shadow-sm mb-4">
 
-    {{-- 
-        #####
-        ##  GROUP ACTION BUTTON
-        #####
-        --}}
+    
+    <div id="highlight" class="mb-4">
+        <p class="h5">Highlight</p>
+        <div class="container my-3 p-0">
+            
+            @if (count($highlight)>0)
+            @foreach ($highlight as $h)
+            <div class="py-2 px-3 mb-3 rounded" style="background-color:#34B697">
+                <a href="{{route('task.show', $h->id)}}" class="d-block m-2 py-2 px-3 bg-white text- text-dark">{{$h->head}}</a>
+                <p class="h6 mx-2 font-weight-bold text-truncate text-white">Board : {{$h->board->name}}</p>
+            </div>
 
-    <div id="group-control" class="mb-4 text-center">
-        <a href="#" class="btn btn-info">Atur Grup</a>
-        <a href="#" class="btn btn-primary">Buat Mading</a>
+            @endforeach                    
+
+            @else
+            <div class="text-center">There is no Highlight for this moment</div>
+            @endif
+        </div>
     </div>
-
     {{-- 
         #####
         ##  BOARD LIST 
@@ -80,21 +88,22 @@
     <div id="board-list" class="mb-4">
         <p class="h5">Board</p>
             <div class="container horizontal-scrollable"> 
+                @if (count($board) > 0)
                 <div class="row text-center"> 
-                    <a href="#" class="col-6 col-md-4 box" style="background:#34B697">
+                            
+                    @foreach ($board as $b)
+                    <a href="{{route('board.show', $b->id)}}" class="col-6 col-md-4 box" style="background:#34B697">
                         <div class="mx-2 text-truncate text-white">
-                            Tim Pemasaran 1 232
+                            {{$b->name}}
                         </div>
                     </a> 
-                    <a href="#" class="col-6 col-md-4 box" style="background:#BD3232">
-                        <div class="mx-2 text-truncate text-white">
-                            Kerja Lapangan
-                        </div>
-                    </a> 
-                    <a href="#" class="col-6 col-md-4 box create">
-                        Buat baru
-                    </a> 
+                    @endforeach
                 </div> 
+                    @else
+                    <div class="text-center">
+                    You dont have any board
+                </div>
+                    @endif 
             </div> 
     </div>
 

@@ -6,9 +6,11 @@ use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 use App\Member;
 use App\Content;
 use App\Board;
+use Illuminate\Support\Facades\URL;
 
 class GroupController extends Controller
 {
@@ -23,13 +25,20 @@ class GroupController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Check Membership of particular User
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getMemberships($group_id)
     {
-        return view('group.create');
+        $membership = Member::where('group_id', $group_id)
+                            ->where('user_id', Auth::user()->id)
+                            ->first();
+        if(!$membership){
+            return false;
+        }else{
+            return $membership;
+        }
     }
 
     /**
@@ -85,7 +94,11 @@ class GroupController extends Controller
     {
         $magazine = Content::where('group_id', $group->id)->where('type','magazine')->get();
         $board = Board::where('group_id',$group->id)->get();
-        return view('group.show', ['group_data' => $group, 'magazine' => $magazine,'board'=>$board]);
+
+        $membership = $this->getMemberships($group->id);
+        $task = Content::where('type', 'task')
+                        ->where('member_id', $membership->id)->orderBy('created_at')->get();
+        return view('group.show', ['group_data' => $group, 'magazine' => $magazine,'board'=>$board,'highlight'=>$task]);
     }
 
     /**
@@ -96,8 +109,16 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        $members = Member::where('group_id',$group->id)->get();
-        return view('group.settings', ['group_data' => $group, 'members' =>  $members]);
+        $members = Member::where('group_id',$group->id)->orderBy('created_at')->get();
+        $membership = $members->where('user_id', Auth::user()->id)->first();
+        if($membership){
+        return view('group.settings', [
+            'group_data' => $group, 
+            'members' =>  $members, 
+            'user_membership'=> $membership]);
+        }else{
+            return redirect(route('home'));
+        }
     }
 
     /**
@@ -109,6 +130,12 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
+        $membership = Member::where('group_id', $group->id)
+                            ->where('user_id', Auth::user()->id)
+                            ->first();
+        if(!$membership){
+            return redirect(route('home'));
+        }
         $request->validate([
             'name' => ['required', 'string', 'max:30'],
             'description' => ['required', 'string', 'max:255']
@@ -141,5 +168,71 @@ class GroupController extends Controller
         $uid = Auth::user()->id;
         $member = Member::where('group_id', $group->id)->where('user_id', $uid)->first();
         return view('group.chat', ['group_data' => $group, 'member'=>$member]);
+    }
+
+    /**
+     * Handle Invitation Link
+     * 
+     * 
+     */
+    public function invitation(Group $group)
+    {
+        return view('group.invitation', ['group'=>$group]);
+    }
+
+    /**
+     * Handle Addition for New Member to Group
+     * 
+     */
+    public function member(Group $group, Request $request) 
+    {
+        $code = date("mds").rand(000,999);
+        $idmember = "mbr".$code;
+
+        if($request->invitation){
+            $request->validate([
+                'userId' => 'required',
+            ]);
+            $n = Member::create([
+                'id' => $idmember,
+                'user_id' => $request->userId,
+                'group_id' => $group->id,
+                'access' => 'member',
+                'status' => 1,
+            ]);
+            return redirect(route('group.show', $group->id));
+        }else{
+            $request->validate([
+                'username' => 'required|regex:/(^@[A-Z]??)\w+/',
+                'access' => 'required',
+            ]);
+            $usr = $request->username;
+            $usr = str_replace("@","", $usr);
+            $user = User::where('username', $usr)->first();
+            if(!$user){
+                return redirect(URL::previous());
+            }
+            $n = Member::create([
+                'id' => $idmember,
+                'user_id' => $user->id,
+                'group_id' => $group->id,
+                'access' => $request->access,
+                'status' => 1,
+            ]);
+            return redirect(URL::previous());
+            
+
+        }
+    }
+
+    /**
+     * Handle Member Removed
+     * 
+     */
+    public function memberRemove(Group $group, Request $request)
+    {
+        $member = Member::where('id', $request->member_id)->first();
+        $member->delete();
+        return redirect(route('group.settings', $group->id));
     }
 }
