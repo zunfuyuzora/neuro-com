@@ -17,8 +17,12 @@ class CreateCommentsTable extends Migration
             $table->char('id')->primary();
             $table->char('member_id');
             $table->char('content_id');
-            $table->foreign('content_id')->references('id')->on('contents');
-            $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('content_id')->references('id')->on('contents')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreign('member_id')->references('id')->on('members')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             $table->text('text');
             $table->timestamps();
         });

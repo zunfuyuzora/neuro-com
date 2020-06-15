@@ -17,8 +17,12 @@ class CreateBoardsTable extends Migration
             $table->char('id')->primary();
             $table->char('member_id');
             $table->char('group_id');
-            $table->foreign('member_id')->references('id')->on('members');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('member_id')->references('id')->on('members')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             $table->string('name');
             $table->string('objective');
             $table->timestamps();

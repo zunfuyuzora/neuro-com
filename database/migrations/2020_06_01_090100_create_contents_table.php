@@ -18,9 +18,15 @@ class CreateContentsTable extends Migration
             $table->char('member_id');
             $table->char('board_id')->nullable();
             $table->char('group_id'); 
-            $table->foreign('member_id')->references('id')->on('members');
-            $table->foreign('board_id')->references('id')->on('boards');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('member_id')->references('id')->on('members')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreign('board_id')->references('id')->on('boards')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             $table->text('head');
             $table->text('body');
             $table->enum('type',['magazine','module', 'task']);
