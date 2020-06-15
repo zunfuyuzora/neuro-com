@@ -14,22 +14,21 @@
                 <div class="container mx-5">
                         <form method="POST" action="{{ route('authorize') }}">
                             @csrf
+                            @if (Session::has('error'))
+                            <div class="text-white text-center bg-danger px-2" role="alert">
+                                {{Session::get('error')}}
+                            </div>
+                            @endif
 
                             <div class="form-group">
                                 <label for="username" class="col-form-label text-white">{{ __('E-Mail Address or Username') }}</label>
 
-                                    <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                    @error('username')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                            </div>
-
+                                    <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autofocus>
+                                    
+                                </div>
                             <div class="form-group">
                                 <label for="password" class="col-form-label text-white">{{ __('Password') }}</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required >
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">

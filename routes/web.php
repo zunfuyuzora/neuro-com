@@ -30,6 +30,11 @@ Route::get('/group/{group}/invitation', 'GroupController@invitation')->name('gro
 Route::middleware(['auth'])->group(function (){
 
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/user/{user}', 'ProfileController@userProfile')->name('profile');
+
+    Route::put('/user/{user}/updateData', 'ProfileController@updateData')->name('updateData');
+    Route::put('/user/{user}/changePassword', 'ProfileController@changePassword')->name('changePassword');
+    Route::put('/user/{user}/changeAvatar', 'ProfileController@changeAvatar')->name('changeAvatar');
 
     Route::middleware(['access'])->group(function(){
 

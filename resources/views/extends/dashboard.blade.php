@@ -82,8 +82,10 @@
                         <div class="profile-header container bg-white 
                         {{$_pagename != 'Home' ? 'd-none' : ''}} d-md-block">
                             <div class="profile-content text-center d-flex d-md-block mx-2">
+                                <a href="{{route('profile', Auth::user()->id)}}" title="My Profile">
                                 <img src="{{ asset('/images/user-1.jpeg') }}
                                 {{-- {{ asset('img/'.Auth::user()->avatar)}} --}}" alt="" class="rounded-circle position-relative" style="margin-top: -60px">
+                                </a>
                                 <div class="wrapper md-text-center-from-left  ml-2 py-4" >
                                 <p class="h5 md-h3 font-weight-bold m-0 text-capitalize">
                                     {{Auth::user()->full_name}}
