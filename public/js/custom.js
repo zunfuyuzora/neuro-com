@@ -25,37 +25,35 @@
 //         im.css({ marginTop: "-" + hd + "px", marginLeft: 0 }); //offset top
 //     }
 // });
-
-var avatar = document.getElementsByClassName('pic-avatar');
-
-for (let i = 0; i < avatar.length; i++) {
-    const x = avatar[i];
+// $(document).ready(function(){
     
-    let th = x.offsetHeight,
-        tw = x.offsetWidth,
-        im = x.childNodes[1],
-        ih = im.offsetHeight,
-        iw = im.offsetWidth;
-    if(ih>iw){
-        im.classList.add('w-100');
-        im.style.height = "auto";
-        im.classList.remove('h-100');
-    }else {
-        im.classList.add('h-100');
-        im.style.width = "auto";
-        im.classList.remove('w-100');
-    }
+// var avatar = document.getElementsByClassName('pic-avatar');
 
-    // var nh = im.offsetHeight,
-    //     nw = im.offsetWidth,
-    //     hd = (nh - th) / 2,
-    //     wd = (nw - tw) / 2;
-    // console.log(nh,nw,hd,wd,th,tw,ih,iw);
-    // if (nh > nw) {
-    //     im.style.marginLeft = "-"+ wd +"px";
-    //     im.style.marginTop = 0+"px";
-    // }else{
-    //     im.style.marginTop = "-"+ hd +"px";
-    //     im.style.marginLeft = 0+"px";
-    // }
-}
+// for (let i = 0; i < avatar.length; i++) {
+//     let x = avatar[i];
+    
+//     let th = x.offsetHeight,
+//         tw = x.offsetWidth,
+//         im = x.childNodes[1],
+//         ih = im.offsetHeight,
+//         iw = im.offsetWidth;
+//     if(ih>iw){
+//         im.classList.add("w-100");
+//         im.classList.remove('h-100');
+//         im.style.height = "auto";
+//         console.log('xx');
+//     }else if(iw>ih){
+//         im.classList.add("h-100");
+//         im.classList.remove('w-100');
+//         console.log('yy');
+//         im.style.width = "auto";
+//     }
+//     console.log('www');
+
+//     // var nh = im.offsetHeight,
+//     //     nw = im.offsetWidth,
+//     //     hd = (nh - th) / 2,
+//     //     wd = (nw - tw) / 2;
+// }
+
+// })
