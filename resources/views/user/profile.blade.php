@@ -85,16 +85,16 @@
         <div class="container">
             <div class="container">
                 <h5 class="font-weight-bold">Change Password</h5>
-                <form action="" class="form-group">
+                <form action="{{route('changePassword', $user->id)}}" class="form-group" method="POST">
                     @csrf
-                    <input type="hidden" name="_METHOD" value="PUT">
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="form-inline mb-4 justify-content-between">
                         <label for="password">New Password</label>
-                        <input type="text" id="password" name="password" class="col-9 form-control" required>
+                        <input type="password" id="password" name="password" class="col-9 form-control" required>
                     </div>
                     <div class="form-inline mb-4 justify-content-between">
                         <label for="password-confirmation">New Password</label>
-                        <input type="text" id="password-confirmation" name="password-confirmation" class="col-9 form-control" required>
+                        <input type="password" id="password-confirmation" name="password-confirmation" class="col-9 form-control" required>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-9 col-md-6">
@@ -102,6 +102,17 @@
                     </div>
                     </div>
                 </form>
+
+                @if (Session::has('updatePassword'))
+                <div class="bg-primary text-white text-center">
+                    {{Session::get('updatePassword')}}
+                </div>
+                @endif
+                @if (Session::has('errorUpdatePassword'))
+                <div class="bg-danger text-white text-center">
+                    {{Session::get('errorUpdatePassword')}}
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -110,16 +121,36 @@
             <div id="settings-container" class="p-4 mb-3 rounded shadow-sm bg-white">
 
             <div class="container">
-                <h5 class="font-weight-bold">Foto Profil</h5>
-                <form action="/home" id="uploadAvatar" class="form-group mb-2">
+                <h5 class="font-weight-bold">Profile Picture</h5>
+                <form action="{{route('changeAvatar', $user->id)}}" enctype="multipart/form-data" method="POST" id="uploadAvatar" class="form-group mb-2">
                     @csrf
-                    <input type="hidden" name="_METHOD" value="PUT">
+                    <input type="hidden" name="_method" value="PUT">
                     <input type="file" name="avatar" class="file-input-custom w-100" id="avatar">
+                    <p style="color:gray">Maximum file upload 2 MB (in JPG/PNG format)</p>
+                    <div class="text-right">
+                    <button type="submit" class="btn btn-primary" form="uploadAvatar">Change Profile Picture</button>
+                    </div>
                 </form>
-                <p style="color:gray">Upload file max 2 MB (format: JPG/PNG)</p>
-                <div class="text-right">
-                <button type="submit" class="btn btn-primary" form="uploadAvatar">Change Profile Picture</button>
+                @if (Session::has('updateAvatar'))
+                <div class="bg-primary text-white text-center">
+                    {{Session::get('updateAvatar')}}
                 </div>
+                @endif
+                @if (Session::has('errorUpdateAvatar'))
+                <div class="bg-danger text-white text-center">
+                    {{Session::get('errorUpdateAvatar')}}
+                </div>
+                @endif
+
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
             </div>
             </div>
 

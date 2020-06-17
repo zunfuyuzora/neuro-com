@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class ProfileController extends Controller
@@ -58,7 +59,24 @@ class ProfileController extends Controller
      */
     public function changePassword(Request $request, User $user)
     {
-        //   
+        $request->validate([
+            'password' => ['required', 'string','min:8'],
+        ]);
+        $uid = $user->id;
+        if($uid == Auth::user()->id){
+            
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        $code = "updatePassword";
+        $message = "Password Update Successfull";
+
+        }else{
+            $code = "errorUpdatePassword";
+            $message = "There is an error in the server";
+        }
+
+        return redirect()->route('profile', $user->id)->with($code, $message);
     }
 
     /**
@@ -68,6 +86,27 @@ class ProfileController extends Controller
      */
     public function changeAvatar(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'avatar' => 'mimes:jpeg,jpg,png|required|file|max:2000',
+        ]);
+
+        $uid = $user->id;
+        if($uid == Auth::user()->id){
+            $ext = ".".$request->file('avatar')->extension();
+            $name = rand().$ext;
+
+            $request->file('avatar')->storeAs('public/avatars',$name);
+            $user->avatar = 'storage/avatars/'.$name;
+            $user->save();
+            
+
+            $code = "updateAvatar";
+            $message = "Profile Picture Updated Successfully";
+        }else{
+            $code = "errorUpdateAvatar";
+            $message = "Sorry, We've got an error in the server";
+        }
+        return redirect()->route('profile', $user->id)->with($code, $message);
+
     }
 }

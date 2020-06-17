@@ -35,13 +35,14 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/user/{user}/updateData', 'ProfileController@updateData')->name('updateData');
     Route::put('/user/{user}/changePassword', 'ProfileController@changePassword')->name('changePassword');
     Route::put('/user/{user}/changeAvatar', 'ProfileController@changeAvatar')->name('changeAvatar');
+    Route::resource('/group', 'GroupController')->except('update','destroy','show');
 
     Route::middleware(['access'])->group(function(){
 
         Route::put('/group/{group}/addMember', 'GroupController@member')->name('group.newMember');
         Route::delete('/group/{group}/removeMember', 'GroupController@memberRemove')->name('group.removeMember');
     
-        Route::resource('/group', 'GroupController')->middleware('auth')->except('edit');
+        Route::resource('/group', 'GroupController')->except('edit','create','store');
         Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.settings');
         Route::get('/group/{group}/chat', 'GroupController@chat')->name('group.chat');
         

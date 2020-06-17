@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('full_name');
-            $table->string('avatar')->default('default.jpg');
+            $table->string('avatar')->default('storage/avatars/default.jpg');
             $table->string('bio')->nullable();
             $table->enum('level', ['admin','user'])->default('user');
             $table->rememberToken();

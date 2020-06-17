@@ -42,6 +42,15 @@ class GroupController extends Controller
     }
 
     /**
+     * Show Create Group Pages
+     * 
+     */
+    public function create()
+    {
+        return view('group.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
