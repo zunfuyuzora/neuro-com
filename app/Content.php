@@ -31,4 +31,9 @@ class Content extends Model
     {
         return $this->belongsTo('App\Board');
     }
+
+    public function file()
+    {
+        return $this->hasOne('App\File');
+    }
 }

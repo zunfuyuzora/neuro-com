@@ -39,18 +39,29 @@ Route::middleware(['auth'])->group(function (){
 
     Route::middleware(['access'])->group(function(){
 
-        Route::put('/group/{group}/addMember', 'GroupController@member')->name('group.newMember');
-        Route::delete('/group/{group}/removeMember', 'GroupController@memberRemove')->name('group.removeMember');
-    
-        Route::resource('/group', 'GroupController')->except('edit','create','store');
-        Route::get('/group/{group}/settings', 'GroupController@edit')->name('group.settings');
-        Route::get('/group/{group}/chat', 'GroupController@chat')->name('group.chat');
-        
-        Route::resource('/board', 'BoardController')->except('create','edit');
 
-        Route::resource('/content', 'ContentController')->except('create');
-        Route::get('/mading/{content}', 'ContentController@mading')->name('mading.show');
-        Route::get('/task/{content}', 'ContentController@taskShow')->name('task.show');
+        Route::resource('/group', 'GroupController')->except('edit','create','store');
+    Route::prefix('/g')->group(function(){
+        
+        Route::put('/{group}/addMember', 'GroupController@member')->name('group.newMember');
+        Route::delete('/{group}/removeMember', 'GroupController@memberRemove')->name('group.removeMember');
+    
+        Route::get('/{group}/settings', 'GroupController@edit')->name('group.settings');
+        Route::get('/{group}/chat', 'GroupController@chat')->name('group.chat');
+        
+        Route::resource('/{group}/board', 'BoardController')->except('create','edit');
+
+        Route::resource('/{group}/content', 'ContentController')->except('create');
+
+        Route::get('/{group}/m/{content}', 'ContentController@mading')->name('mading.show');
+        Route::get('/{group}/m/{content}/edit', 'ContentController@madingEdit')->name('mading.edit');
+        Route::put('/{group}/m/{content}', 'ContentController@madingUpdate')->name('mading.update');
+        Route::put('/{group}/m/{content}/picture', 'ContentController@madingPicture')->name('mading.picture');
+
+        Route::get('/{group}/t/{content}', 'ContentController@taskShow')->name('task.show');
+        Route::get('/{group}/t/{content}/edit', 'ContentController@taskEdit')->name('task.edit');
+        Route::put('/{group}/t/{content}/update', 'ContentController@taskUpdate')->name('task.update');        
+    });
     });
 
     Route::post('/comment','CommentController@store')->name('comment.store');

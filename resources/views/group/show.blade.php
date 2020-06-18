@@ -70,8 +70,8 @@
                 <?php $active = 'active' ?>
                 @foreach ($magazine as $m)
                 <div class="carousel-item {{$active}}">
-                    <a href="{{route('mading.show', $m->id)}}">
-                    <img src="{{ asset('images/wallpaper.jpg') }}" alt="1st Slide" class="d-block"> 
+                    <a href="{{route('mading.show', ['group'=> $group_data->id,'content'=>$m->id])}}">
+                    <img src="{{ asset($m->file->location) }}" alt="1st Slide" class="d-block"> 
                     <div class="carousel-caption text-left">
                         <p class="h3 text-white">{{$m->head}}</p>
                     </div>
@@ -105,7 +105,7 @@
                     @if (isset($board) & count($board) >= 1)
                     @foreach ($board as $b)
                         
-                    <a href="{{route('board.show', $b->id)}}" class="col-6 col-md-4 box" style="background:#34B697">
+                    <a href="{{route('board.show', ['group'=>$group_data->id,'board'=>$b->id])}}" class="col-6 col-md-4 box" style="background:#34B697">
                         <div class="mx-2 text-truncate text-white">
                             {{$b->name}}
                         </div>
@@ -188,7 +188,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{route('content.store')}}" method="POST" id="CreateNewMagazine">
+            <form action="{{route('content.store', $group_data->id)}}" method="POST" id="CreateNewMagazine">
                 @csrf
                 <div class="form-group">
                     <label for="head">Header</label>
@@ -221,7 +221,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{route('board.store')}}" method="POST" id="CreateNewBoard">
+            <form action="{{route('board.store', $group_data->id)}}" method="POST" id="CreateNewBoard">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>

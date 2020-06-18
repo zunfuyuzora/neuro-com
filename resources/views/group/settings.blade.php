@@ -12,11 +12,11 @@
                 <h5 class="font-weight-bold">Group Detail</h5>
                 @if ($user_membership->access == "member")
                 <form class="form-group">
-                    <div class="form-inline mb-4 justify-content-between">
+                    <div class="form-inline form-group mb-4 justify-content-between">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" class="col-9 form-control" value="{{$group_data->name}}">
                     </div>
-                    <div class="form-inline mb-4 align-items-start justify-content-between">
+                    <div class="form-inline mb-4 align-items-start justify-content-between form-group">
                         <label for="description" class="mt-2">Description</label>
                         <textarea type="text" id="description" name="description" class="col-9 form-control" rows="5">{{$group_data->description}}</textarea>
                     </div>
@@ -25,11 +25,11 @@
                 <form action="{{route('group.update', $group_data->id)}}" method="POST" class="form-group">
                     @csrf
                     <input type="hidden" name="_method" value="PUT">
-                    <div class="form-inline mb-4 justify-content-between">
+                    <div class="form-inline form-group mb-4 justify-content-between">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" class="col-9 form-control" value="{{$group_data->name}}">
                     </div>
-                    <div class="form-inline mb-4 align-items-start justify-content-between">
+                    <div class="form-inline form-group mb-4 align-items-start justify-content-between">
                         <label for="description" class="mt-2">Description</label>
                         <textarea type="text" id="description" name="description" class="col-9 form-control" rows="5">{{$group_data->description}}</textarea>
                     </div>
@@ -37,7 +37,7 @@
                         <p class="bg-primary border-radius-3 text-white px-2 text-small"><span>{{Session::get('message')}}</span></p>
                     @endif
                     <div class="row justify-content-center">
-                        <div class="col-12 col-sm-9 col-md-6">
+                        <div class="col-12 col-sm-9 col-md-6 form-group">
                         <button type="submit" class="btn btn-primary form-control">Update</button>
                     </div>
                     </div>
@@ -64,7 +64,7 @@
                 <h5 class="font-weight-bold">Member List</h5>
                 <div class="row">
                     <div class="form-group col-12 col-sm">
-                        <div class="input-group">
+                        <div class="input-group form-group">
                             <input type="text" class="form-control" name="keyword" id="memberSearch" placeholder="Search Member">
                             <div class="input-group-append">
                                 <button class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -89,7 +89,7 @@
                 <div class="row mb-4">
                     <div class="col overflow-hidden">
                         <div class="pic-avatar">
-                            <img src="{{ asset('./images/user-1.jpeg') }}" alt="[Avatar]" class="img-fluid">
+                            <img src="{{ asset($m->user->avatar) }}" alt="[Avatar]">
                         </div>
                     </div>
                     <div class="col-6 py-2">
@@ -130,7 +130,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{route('group.newMember', $group_data->id)}}" method="POST" id="AddMember">
+            <form action="{{route('group.newMember', $group_data->id)}}" method="POST" id="AddMember" class="form-group">
                 @csrf
                 <input type="hidden" name="_method" value="PUT">
                 <div class="form-group">

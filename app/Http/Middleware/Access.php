@@ -18,7 +18,11 @@ class Access
     public function handle($request, Closure $next)
     {
         if($request->route('group')){
-            $group_id = $request->route('group')->id;
+            try {
+                $group_id = $request->route('group')->id;
+            } catch (\Throwable $th) {
+                $group_id = $request->route('group');
+            }
         }elseif($request->route('content')){
             $group_id = $request->route('content')->group_id;
         }elseif ($request->route('board')) {
@@ -26,7 +30,6 @@ class Access
         }elseif ($request->group){
             $group_id = $request->group;
         }
-
         $membership = Member::where('group_id', $group_id)
                 ->where('user_id', Auth::user()->id)
                 ->first();

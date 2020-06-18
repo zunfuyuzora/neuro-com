@@ -30,19 +30,28 @@
 
 @section('main-content')
 
-<div class="container d-flex flex-column justify-content-center bg-white p-4 shadow-sm mb-4">
+<div class=" d-flex flex-column justify-content-center bg-white shadow-sm mb-4">
 
     <div id="header">
-        <div class="row">
-            <div class="col">
-                <div class="h4 font-weight-bold">{{$mading->head}} 
-                </div>
-                <p>
-                    {{$mading->body}}
-                </p>
-            </div>
+    <div style="background-image: url('{{asset($mading->file->location)}}');background-size:cover">
+
+        <div class="p-3 pb-3" style="background:rgba(0, 0, 0, 0.7)">
+    @if (Auth::user()->username == $mading->member->user->username)            
+        <div class="text-right">
+            <a href="{{route('mading.edit',['group'=>$mading->group_id,'content'=>$mading->id])}}" title="Edit Magazine Page">Edit <i class="fa fa-edit"></i></a>
         </div>
-        <hr >
+    @endif
+        <div class="display-3 text-white">{{$mading->head}} 
+        </div>
+        <p class="text-white">{{'@'.$mading->member->user->username}} |
+        {{$mading->created_at}}</p>
+        </div>
+
+    </div>
+        <p style="min-height: 200px" class="p-3">
+            {!! nl2br(e($mading->body))!!}
+        </p>
+        <div class="text-center text-gray mb-2">__</div>
     </div>
 </div>
 

@@ -10,6 +10,7 @@ use App\User;
 use App\Member;
 use App\Content;
 use App\Board;
+use App\File;
 use Illuminate\Support\Facades\URL;
 
 class GroupController extends Controller
@@ -66,6 +67,7 @@ class GroupController extends Controller
         $idgroup = "grp".$code;
         $idmember = "mbr".$code;
         $idcontent = "mag".$code;
+        $idfile = "file".$code;
 
         $newGroup = Group::create([
             "id" => $idgroup,
@@ -73,7 +75,7 @@ class GroupController extends Controller
             "description" => $request->description,
         ]);
 
-        $newMember = Member::create([
+        Member::create([
             "id" => $idmember,
             "user_id" => Auth::user()->id,
             "group_id" => $idgroup,
@@ -81,13 +83,21 @@ class GroupController extends Controller
             "status" => true,
         ]);
 
-        Content::create([
+        $newMagz = Content::create([
             "id" => $idcontent,
             "member_id" => $idmember,
             "group_id" => $idgroup,
             "head"=> "New Group Created",
             "body" => "Getting started. Here is what to know about groups",
             "type" => "magazine"
+        ]);
+
+        File::create([
+            "id" => $idfile,
+            "content_id" => $idcontent,
+            "filename" => "default.jpg",
+            "location" => "storage/docs/default.jpg",
+            "filetype" => "jpg",
         ]);
 
         return redirect()->route('group.show',$newGroup);

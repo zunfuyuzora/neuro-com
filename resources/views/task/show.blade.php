@@ -1,33 +1,5 @@
-@extends('extends.dashboard',['_pagename'=>'Task','_backLink'=> route('board.show', $task->board_id),'groupId'=>$task->board->group_id])
+@extends('extends.dashboard',['_pagename'=>'Task','_backLink'=> route('board.show', [$task->board->group->id,$task->board_id]),'groupId'=>$task->board->group_id])
 
-@section('card-content')
-
-    {{-- 
-        #####
-        ##  WIDE SCREEN - GROUP SELECTION
-        #####
-        --}}
-
-<div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
-    <div class="container py-3">
-        <ul class="list-group">
-            <li class="list-group-item ">
-                <a href="#">Private</a>
-            </li>
-            <li class="list-group-item active">
-                <a href="#">Grup #1</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Kelompok ABC</a>
-            </li>
-        </ul>
-        <div class="form-group">
-        <a href="#" class="my-2 btn btn-primary">
-            Buat Grup
-        </a></div>
-    </div>
-</div>
-@endsection
 
 @section('main-content')
 
@@ -52,14 +24,16 @@
             <div class="row mb-2">
                 <div class="col-3">
                     <div class="pic-avatar text-center d-flex d-md-block mx-2">
-                            <img src="{{ asset('/images/user-6.jpg') }}" alt="[avatar]">
+                            <img src="{{ asset($task->member->user->avatar) }}" alt="[avatar]">
                     </div>
                 </div>
 
                 <div class="col-9">
                     <div class="wrappers">
+                    <p class="h6" style="color:gray">Due Date:</p>
+                    <textarea name="descipription" id="desc" cols="30" rows="1" class="form-control mb-2" readonly>{{$task->progress->due_date}}</textarea>
                     <p class="h6" style="color:gray">Detail:</p>
-                    <textarea name="descipription" id="desc" cols="30" rows="5" class="form-control mb-2" readonly>{{$task->body}}</textarea>
+                    <textarea name="description" id="desc" cols="30" rows="5" class="form-control mb-2" readonly>{{$task->body}}</textarea>
                     <p class="h6" style="color:gray">Attachment</p>
                     </div>
                     <div id="attachment">
@@ -73,7 +47,14 @@
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->id == $task->member->user->id)
+                
+            <div class="text-right">
+                <a href="{{route('task.edit', ['group'=>$task->group_id,'content'=>$task->id])}}" class="btn btn-primary">Update Task</a>
+                </div>
             </div>
+
+            @endif
         </div>
         {{-- COMMENTARY SECTION --}}
     <div id="commentary">
@@ -108,7 +89,7 @@
 
                 <div class="col">
                         <div class="pic-avatar">
-                            <img src="{{asset('/images/user-1.jpeg')}}" alt="[avatar]">
+                            <img src="{{asset(Auth::user()->avatar)}}" alt="[avatar]">
                         </div>
                 </div>
                 <div class="col-9">

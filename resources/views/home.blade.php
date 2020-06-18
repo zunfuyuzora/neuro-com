@@ -67,7 +67,7 @@
             @if (count($highlight)>0)
             @foreach ($highlight as $h)
             <div class="py-2 px-3 mb-3 rounded" style="background-color:#34B697">
-                <a href="{{route('task.show', $h->id)}}" class="d-block m-2 py-2 px-3 bg-white text- text-dark">{{$h->head}}</a>
+                <a href="{{route('task.show', ['group'=>$h->group->id,'content'=>$h->id])}}" class="d-block m-2 py-2 px-3 bg-white text- text-dark">{{$h->head}}</a>
                 <p class="h6 mx-2 font-weight-bold text-truncate text-white">Board : {{$h->board->name}}</p>
             </div>
 
@@ -92,7 +92,7 @@
                 <div class="row text-center"> 
                             
                     @foreach ($board as $b)
-                    <a href="{{route('board.show', $b->id)}}" class="col-6 col-md-4 box" style="background:#34B697">
+                    <a href="{{route('board.show',['group'=>$b->group->id,'board'=>$b->id])}}" class="col-6 col-md-4 box" style="background:#34B697">
                         <div class="mx-2 text-truncate text-white">
                             {{$b->name}}
                         </div>

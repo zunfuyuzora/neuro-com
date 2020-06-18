@@ -33,8 +33,8 @@
                         <span class="nav-link-inner-text">Board</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="#">
-                        <span class="nav-link-inner-text">Profil</span></a>
+                    <a class="nav-link nav-link-icon" href="{{route('profile', Auth::user()->id)}}">
+                        <span class="nav-link-inner-text">Profile</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="#">
@@ -56,7 +56,7 @@
     </div>
 </nav>
 
-<div id="body" class="container mt-md-4">
+<div id="body" class="container mt-md-4" style="min-height: 80vh">
     <div class="row">
         <div class="col-sm-12 col-md-5 col-lg-4 p-0">
             <div id="profile_part" class="bg-transparent mb-3">
@@ -82,9 +82,9 @@
                         <div class="profile-header container bg-white 
                         {{$_pagename != 'Home' ? 'd-none' : ''}} d-md-block">
                             <div class="profile-content text-center d-flex d-md-block mx-2">
-                                <a href="{{route('profile', Auth::user()->id)}}" class="d-flex justify-content-center" style="">
+                                <a href="{{route('profile', Auth::user()->id)}}" class="d-flex justify-content-center">
                                     <div class="pic-avatar" style="margin-top:-55px">
-                                        <img src="{{ asset(Auth::user()->avatar) }}" alt="[Avatar]" class="img-fluid">
+                                        <img src="{{ asset(Auth::user()->avatar)}}" alt="[Avatar]">
                                     </div>
                                 </a>
                                 {{-- <a href="{{route('profile', Auth::user()->id)}}" title="My Profile" class="">
@@ -148,9 +148,8 @@
 </div>
 
 <div id="footer" class="bg-dark p-4 mt-5" style="bottom:0;">
-    <div class="container text-white">
-        <a href="#" class="text-white">Backup Database</a><br>
-        <a href="#" class="text-white">Generate Report</a>
+    <div class="container text-white text-center">
+        Copyright &copy; 2020
     </div>
 </div>
 @endsection

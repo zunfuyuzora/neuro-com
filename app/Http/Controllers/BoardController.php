@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Board;
+use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Member;
@@ -37,7 +38,7 @@ class BoardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
         $request->validate([
             "_group"=> "required",
@@ -54,7 +55,7 @@ class BoardController extends Controller
             "objective" => $request->objective,
         ]);
 
-        return redirect()->route("board.show", $newBoard->id);
+        return redirect()->route("board.show", ['group'=>$group,'board' =>$newBoard->id]);
     }
 
     /**
@@ -63,7 +64,7 @@ class BoardController extends Controller
      * @param  \App\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function show(Board $board)
+    public function show($group, Board $board)
     {
         $member = Member::where('group_id', $board->group_id)->get();
         $task = Content::where('type', 'task')->where('board_id', $board->id)->get();
@@ -88,7 +89,7 @@ class BoardController extends Controller
      * @param  \App\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Board $board)
+    public function update($group,Board $board, Request $request)
     {
         $request->validate([
             "name" => "required",
@@ -99,7 +100,7 @@ class BoardController extends Controller
         $board->objective = $request->objective;
         $board->save();
 
-        return redirect()->route("board.show", $board->id);
+        return redirect()->route("board.show", ["group"=>$group,"board"=>$board->id]);
     }
 
     /**

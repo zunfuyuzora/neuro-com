@@ -15,6 +15,10 @@ class Board extends Model
         return $this->belongsTo('App\Group');
     }
 
+    public function member() {
+        return $this->belongsTo('App\Member');
+    }
+
     public function task() {
         return $this->hasMany('App\Task');
     }

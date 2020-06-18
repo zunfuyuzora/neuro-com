@@ -9,6 +9,6 @@ class Progress extends Model
     public $incrementing = false;
     public $table = 'progress';
     protected $fillable = [
-        'id','content_id','status'
+        'id','content_id','status','due_date'
     ];
 }
