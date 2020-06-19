@@ -36,6 +36,11 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/user/{user}/changePassword', 'ProfileController@changePassword')->name('changePassword');
     Route::put('/user/{user}/changeAvatar', 'ProfileController@changeAvatar')->name('changeAvatar');
     Route::resource('/group', 'GroupController')->except('update','destroy','show');
+    Route::post('/group/search','GroupController@search')->name('group.search');
+    Route::post('/group/{group}/join','GroupController@joinGroup')->name('group.join');
+    Route::get('/group/{group}/guest', 'GroupController@showGuest')->name('group.guest');
+
+    Route::post('/upload/{id}/attachment', 'FileController@uploadAttachment')->name('upload.attachment');
 
     Route::middleware(['access'])->group(function(){
 

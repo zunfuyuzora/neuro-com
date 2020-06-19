@@ -4,7 +4,6 @@
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand" href="{{route('home')}}">
-            {{-- <img src="{{ asset('images/sample-logo.png')}}" alt=""> --}}
             {{config('app.name')}}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbar-primary" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,9 +112,14 @@
                             isset($groupId) ? ($groupId == $g->group->id ? "active" : "") : ""
                         }}">
                             <a href="{{route('group.show',$g->group->id)}}">{{$g->group->name}}</a>
+                        @if ($g->group->getMembers->where('user_id',Auth::user()->id)->where("status",0)->first())
+                            
+                        <span class="badge badge-primary">
+                            Requested
+                        </span>
+                        @endif
                         </li>
                     @endforeach
-                    
                     </ul>
 
                     @else
@@ -127,25 +131,53 @@
                     @endif
                     <div class="text-center">
 
-                    <a href="{{route('group.create')}}" class="my-2">
+                    <a href="#searchGroup" data-target="#searchGroup" data-toggle="modal" class="my-2">
                         Join a Group
                     </a>or
                     <a href="{{route('group.create')}}" class="my-2 btn btn-sm btn-outline-primary">
                         Create Group
                     </a>
-
                     </div>
+                                            
+                        {{-- MODAL PAGE --}}
+
+                        <div class="modal fade" tabindex="-1" role="dialog" id="searchGroup">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title">Join a group</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{route('group.search')}}" method="POST" id="searchForm">
+                                        @csrf
+                                        <div class="form-group">
+                                            <input type="text" name="group_id" class="form-control" placeholder="Group ID">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="searchForm">Search</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        {{-- End Modal --}}
                 </div>
             </div>
         </div>
         <div class=" col"></div>
-        <div id="main_content" class="col-sm-12 col-md-6 col-lg-7 p-0 ">
+            <div id="main_content" class="col-sm-12 col-md-6 col-lg-7 p-0 ">
 
-            @yield('main-content')
+                @yield('main-content')
 
+            </div>
         </div>
     </div>
-</div>
+</div>  
 
 <div id="footer" class="bg-dark p-4 mt-5" style="bottom:0;">
     <div class="container text-white text-center">

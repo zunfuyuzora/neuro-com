@@ -32,6 +32,7 @@ class Access
         }
         $membership = Member::where('group_id', $group_id)
                 ->where('user_id', Auth::user()->id)
+                ->where('status', 1)
                 ->first();
         if(!$membership){
             return redirect(route('admin.dashboard'));

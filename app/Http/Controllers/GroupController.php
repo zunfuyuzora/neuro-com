@@ -73,6 +73,7 @@ class GroupController extends Controller
             "id" => $idgroup,
             "name" => $request->name,
             "description" => $request->description,
+            "avatar" => "storage/docs/default.jpg"
         ]);
 
         Member::create([
@@ -253,5 +254,64 @@ class GroupController extends Controller
         $member = Member::where('id', $request->member_id)->first();
         $member->delete();
         return redirect(route('group.settings', $group->id));
+    }
+
+    /**
+     * Handle Search For Group to Join
+     * 
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'group_id' => 'required',
+        ]);
+        $g = Group::where('id', $request->group_id)->first();
+        if($g){
+            //
+            return redirect()->route('group.guest', $g->id);
+        }else {
+            return "not found";
+        }
+    }
+
+    /**
+     * Handle to give view for non-member of group 
+     *  
+    */
+    public function showGuest(Group $group)
+    {
+        $uid = Auth::user()->id;
+        $membership = Member::where("group_id",$group->id)
+                        ->where("user_id",$uid)->first();
+        if(!$membership){
+            return view('group.guest', ['group'=>$group]);
+        }else{
+            return redirect()->route("group.show",$group->id);
+        }
+    }
+
+    /**
+     * Handle join request to a group
+     * 
+     */
+    public function joinGroup(Group $group, Request $request)
+    {
+        $request->validate([
+            'join' => "required",
+        ]);
+
+        $code = date("mds").rand(000,999);
+        $idmember = "mbr".$code;
+
+        $group_id = $group->id;
+        $user_id = Auth::user()->id;
+        $n = Member::create([
+            'id' => $idmember,
+            'user_id' => $user_id,
+            'group_id' => $group_id,
+            'access' => "member",
+            'status' => 0,
+        ]);
+        return redirect(URL::previous());
     }
 }

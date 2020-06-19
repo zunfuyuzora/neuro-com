@@ -6,9 +6,11 @@ use App\Comment;
 use App\Member;
 use App\Content;
 use App\File;
+use App\Group;
 use App\Progress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ContentController extends Controller
 {
@@ -203,8 +205,11 @@ class ContentController extends Controller
      */
     public function taskShow($group,Content $content)
     {
+        $files = File::where('content_id', $content->id)->orderBy('created_at','asc')->get();
         $comments =  Comment::where('content_id', $content->id)->get();
-        return view('task.show', ['task' => $content, 'comments' => $comments]);
+        $access = $content->member->user->id == Auth::user()->id ? true : false;
+
+        return view('task.show', ['task' => $content, 'comments' => $comments, 'files'=>$files,'access'=>$access]);
     }
 
     /**
@@ -217,36 +222,34 @@ class ContentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Content  $content
-     * @return \Illuminate\Http\Response
+     * Handle task update 
+     * 
      */
-    public function edit(Content $content)
+    public function taskUpdate($group, Content $content, Request $request)
     {
-        //
-    }
+        $request->validate([
+            'task'=> 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'due_date' => 'required',
+        ]);
+        
+        $content->head = $request->task;
+        $content->body = $request->description;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Content  $content
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Content $content)
-    {
-        //
-    }
+        $progress = Progress::where('content_id',$content->id)->first();
+        $progress->status = $request->status;
+        $progress->due_date = $request->due_date;
+        try {
+            DB::beginTransaction();
+            DB::commit();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Content  $content
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Content $content)
-    {
-        //
+            $content->save();
+            $progress->save();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
+
+        return redirect()->route('task.show', ['group'=>$group,'content'=>$content->id])->with('success', 'Task Updated Successfully');
     }
 }

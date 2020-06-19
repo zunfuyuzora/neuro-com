@@ -29,7 +29,9 @@
                 </div>
 
                 <div class="col-9">
-                    <form action="{{route('task.update',['group'=>$task->group_id, 'content'=>$task->id])}}" method="POST" class="wrappers">
+                    <form action="{{route('task.update',['group'=>$task->group_id, 'content'=>$task->id])}}" method="POST" class="wrappers" id="editTask">
+                    @csrf
+                    <input type="hidden" name="_method" value="PUT">
                     <p class="h6" style="color:gray">Task Name</p>
                     <input type="datetime" name="task" id="task" class="form-control mb-2" value="{{$task->head}}">
                     <p class="h6" style="color:gray">Detail:</p>
@@ -48,7 +50,7 @@
             @if (Auth::user()->id == $task->member->user->id)
                 
             <div class=" text-right">
-                <a href="#" class="btn btn-primary">Update Task</a>
+                <button type="submit" form="editTask" class="btn btn-primary">Update Task</button>
                 </div>
             </div>
 

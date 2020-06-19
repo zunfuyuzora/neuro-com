@@ -39,21 +39,66 @@
                     <div id="attachment">
                         <div class="pill">
                             <table class="table table-sm table-borderless">
-                                <tr class="">
-                                    <a href="">Pembagian Tugas.docx</a>
+                                <tbody>
+
+                                @if(isset($files))
+                                @if (count($files)>0)
+                                    
+                                    @foreach ($files as $f)
+                                        <tr>
+                                            <td>
+                                            <a href="{{asset($f->location)}}" target="_blank">
+                                                {{$f->filename}} </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                <tr class="text-center">
+                                    No attachment
                                 </tr>
+                                @endif
+                                @endif
+                            </tbody>
+
                             </table>
+                            @if ($access)
+                                <form action="{{route('upload.attachment',$task->id)}}" class="form-group" enctype="multipart/form-data" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                    <input type="file" name="file" id="file" class="form-control">
+                                    <div style="color:gray">
+                                        Filetype should .pdf/.docx/.doc/.ppt or images (.jpg/.jpeg/.png)<br>
+                                        File maximum 10 MB
+                                    </div>
+                                    @if ($errors->any())
+                                    <ul class="bg-danger text-white">
+                                        @foreach ($errors->all() as $e)
+                                        <li>
+                                            {{$e}}
+                                        </li>   
+                                        @endforeach
+                                    </ul>
+                                        @endif
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-warning">Upload File</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-            @if (Auth::user()->id == $task->member->user->id)
+            @if ($access)
                 
-            <div class="text-right">
-                <a href="{{route('task.edit', ['group'=>$task->group_id,'content'=>$task->id])}}" class="btn btn-primary">Update Task</a>
+                <div class="text-right">
+                    <a href="{{route('task.edit', ['group'=>$task->group_id,'content'=>$task->id])}}" class="btn btn-primary">Update Task</a>
                 </div>
-            </div>
 
+            @endif
+            </div>
+            @if (Session::has('success'))
+            <div class="text-center bg-primary mt-4 text-white">
+                {{Session::get('success')}}
+            </div>
             @endif
         </div>
         {{-- COMMENTARY SECTION --}}

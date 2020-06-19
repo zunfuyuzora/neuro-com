@@ -10,6 +10,10 @@
         <div class="container">
             <div class="container">
                 <h5 class="font-weight-bold">Group Detail</h5>
+                <div class="text-center mb-2" style="color:gray">
+                    Group ID : {{$group_data->id}}
+
+                </div>
                 @if ($user_membership->access == "member")
                 <form class="form-group">
                     <div class="form-inline form-group mb-4 justify-content-between">
