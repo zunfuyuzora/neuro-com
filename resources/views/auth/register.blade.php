@@ -9,7 +9,8 @@
                     <div class="display-2 ">
                         Signing Up
                     </div>
-                    <p>Finish this up and getting close to bunch of cool features of <strong>Neuro Gustione</strong></p>
+                    <p>Finish this up and getting close to bunch of cool features of <strong class="font-weight-bold">{{config('app.name')}}
+                    </strong></p>
                 </div>
                 <div class="container mx-5">
                         <form method="POST" id="register" action="{{ route('register') }}">

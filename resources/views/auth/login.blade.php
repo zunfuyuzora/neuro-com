@@ -7,7 +7,7 @@
             <div class="vh-100 p-3 d-flex align-items-center justify-content-center flex-column">
                 <div class="container mb-4 text-white">
                     <div class="display-2 ">
-                        Neuro Gustione
+                        {{config('app.name')}}
                     </div>
                     <p>Get in touch with your team.</p>
                 </div>

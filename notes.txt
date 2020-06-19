@@ -2,3 +2,8 @@ File yang dibutuhkan
 
 Routes/web.php
 Public/css/
+
+Symbolic Link
+
+Source : storage/app/Public/avatars
+Link : public/storage/

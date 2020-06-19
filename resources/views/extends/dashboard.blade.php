@@ -5,7 +5,7 @@
     <div class="container">
         <a class="navbar-brand" href="{{route('home')}}">
             {{-- <img src="{{ asset('images/sample-logo.png')}}" alt=""> --}}
-            Neuro
+            {{config('app.name')}}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbar-primary" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
