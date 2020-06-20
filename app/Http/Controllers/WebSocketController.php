@@ -66,37 +66,27 @@ class WebSocketController extends Controller implements MessageComponentInterfac
     function onMessage(ConnectionInterface $from, $data){
         $numRecv = count($this->clients) - 1;
         $data = json_decode($data);
-        echo sprintf('Connection %d sending message "%s" to other connection%s'."\n", $from->resourceId, $data->message, $numRecv == 1 ? '' : 's');
         switch($data->command){
             case "subscribe":
                 $this->subscriptions[$from->resourceId] = $data->channel;
+                echo "Connection ".$from->resourceId." subscribe to ".$data->channel;
             break;
             case "message":
                 if(isset($this->subscriptions[$from->resourceId])){
                     $target = $this->subscriptions[$from->resourceId];
                     foreach($this->subscriptions as $id => $channel){
                         if($target == $channel && $id !== $from->resourceId){
-                                                
+        echo sprintf('Connection %d sending message "%s" to other connection%s'."\n", $from->resourceId, $data->message, $numRecv == 1 ? '' : 's');
                             $member = Member::where('id', $data->member)->first();
                             $name = $member->user->full_name;
-                            $time = date('D H:i');
-                            $this->users($id)->send(json_encode([            
+                            $this->users[$id]->send(json_encode([            
                                 'message' => $data->message,
                                 'name' => $name,
-                                'time' => $time,
+                                'time' => $data->time,
                             ]));
                         }
                     }
                 }
-        }
-        foreach ($this->clients as $client) {
-            if ($from !== $client){    
-                $client->send(json_encode([
-                    'message' => $data->message,
-                    'name' => $name,
-                    'time' => $time,
-                ]));
-            }
         }
         // if(is_null($this->connections[$conn->resourceId]['user_id'])){
         //     $this->connections[$conn->resourceId]['user_id'] = $msg;

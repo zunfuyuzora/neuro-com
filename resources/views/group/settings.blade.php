@@ -1,4 +1,4 @@
-@extends('extends.dashboard',['_pagename'=>'Settings','_backLink'=> route('group.show',$group_data->id)])
+@extends('extends.dashboard',['_pagename'=>'Settings','_backLink'=> route('group.show',$group_data->id),'groupId'=>$group_data->id])
 
 
 @section('main-content')
@@ -50,7 +50,7 @@
             </div>
             @if ($user_membership->access == "creator")
                 
-            <form action="{{route('group.destroy', $group_data->id)}}" id="deleteGroup">
+            <form action="{{route('group.destroy', $group_data->id)}}" id="deleteGroup" method="POST">
                 @csrf
                 <input type="hidden" name="_method" value="DELETE">
             </form>
@@ -67,11 +67,13 @@
             <div class="container">
                 <h5 class="font-weight-bold">Member List</h5>
                 <div class="row">
-                    <div class="form-group col-12 col-sm">
-                        <div class="input-group form-group">
-                            <input type="text" class="form-control" name="keyword" id="memberSearch" placeholder="Search Member">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <div class="col-12 col-sm">
+                        <div class="form-group d-none">
+                            <div class="input-group form-group">
+                                <input type="text" class="form-control" name="keyword" id="memberSearch" placeholder="Search Member">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,7 +100,7 @@
                     </div>
                     <div class="col-6 py-2">
                         <div class="wrappers text-truncate">
-                            <p class="h5 m-0">{{$m->user->full_name}}</p>
+                            <p class="h5 m-0"><a href="{{route('profile',$m->user->id)}}">{{$m->user->full_name}}</a></p>
                             <p class="h6 m-0" style="color:gray">{{"@".$m->user->username}}</p>
                             <p class="h6 m-0 text-capitalize">{{$m->access}}</p>
                         </div>
@@ -122,7 +124,7 @@
         
         @if ($user_membership->access == "member")
         @else
-        {{-- NEW MEMBBER MODALL --}}
+        {{-- NEW MEMBER MODALL --}}
 
 <div class="modal fade" tabindex="-1" role="dialog" id="newMemberModal">
     <div class="modal-dialog modal-dialog-centered" role="document">

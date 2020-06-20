@@ -1,32 +1,6 @@
-@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home')])
+@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home'),'groupId'=>$group_data->id])
 
 @section('main-content')
-    {{-- 
-        #####
-        ##  SMALL SCREEN - GROUP SELECTION
-        #####
-        --}}
-
-<div id="sm-group-selection" class="container d-md-none">
-    <div class="text-right">
-        <form action="" class="form-group">
-            <div class="row">
-                <div class="col-6">
-                    <a href="#" class="btn btn-primary form-control">
-                        Buat Grup
-                    </a>
-                </div>
-                <div class="col-6">
-                    <select name="" id="" class="form-control">
-                        <option value="">Private</option>
-                        <option value="" selected>Grup #1</option>
-                        <option value="">Kelompok ABC</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
 <div class="container d-flex flex-column justify-content-center bg-white p-4 shadow-sm mb-4">
     <div id="group-control" class=" text-center">
@@ -56,6 +30,8 @@
 @endsection
 @push('script')
     <script>
+    $(document).ready(function(){
+            
         var socketStatus = document.getElementById('status');
         var form = document.getElementById('text-message');
         var messageField = document.getElementById('message_box');
@@ -69,10 +45,13 @@
         var ws = new WebSocket("ws://localhost:8090/");
 
         ws.onopen = function () {
-            // Websocket is connected
-            // socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.url;
             socketStatus.innerHTML = 'Connected';
             console.log("Websocket connected");
+            var data = {
+                "command" : "subscribe",
+                "channel" : "{{$group_data->id}}"
+            }
+            ws.send(JSON.stringify(data))
         };
         ws.onmessage = function (event) {
             // Message received
@@ -97,27 +76,29 @@
 
         form.onsubmit = function(e) {
             e.preventDefault();
-
+            var name = "{{Auth::user()->full_name}}"
+            var d = new Date();
+            var dateTime = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
             var message = messageField.value;
             var member = memberData.value;
             var data = {
+                "command" : "message",
                 "message" : message,
                 "member" : member,
+                "time" : dateTime
             }
             ws.send(JSON.stringify(data));
 
             var messageContainer = document.createElement('div');
             messageContainer.className= 'message self';
-            let data = JSON.parse(event.data);
-            console.log("Message From = " + data.name);
-            console.log("Said = " + data.message);
-            console.log("At time = " + data.time);
-            messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+data.name+'</div><div class="text">'+data.message+'</div><div class="time">'+data.time+'</div></div>';
+            messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+name+'</div><div class="text">'+data.message+'</div><div class="time">'+data.time+'</div></div>';
             chatContainer.appendChild(messageContainer);
 
             messageField.value = '';
 
             return false;
         }
+
+    });
     </script>
 @endpush

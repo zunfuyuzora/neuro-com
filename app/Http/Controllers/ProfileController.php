@@ -14,7 +14,8 @@ class ProfileController extends Controller
      * 
      */
     public function userProfile(User $user) {
-        return view('user.profile',['user'=>$user]);
+        $access = $user->id == Auth::user()->id ? true : false;
+        return view('user.profile',['user'=>$user,'access'=>$access]);
     }
 
     /**

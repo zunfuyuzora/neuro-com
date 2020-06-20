@@ -11,6 +11,7 @@ use App\Member;
 use App\Content;
 use App\Board;
 use App\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
 class GroupController extends Controller
@@ -63,45 +64,56 @@ class GroupController extends Controller
             'name' => ['required', 'string', 'max:30'],
             'description' => ['required', 'string', 'max:255']
         ]);
-        $code = date("mds").rand(000,999);
-        $idgroup = "grp".$code;
-        $idmember = "mbr".$code;
-        $idcontent = "mag".$code;
-        $idfile = "file".$code;
 
-        $newGroup = Group::create([
-            "id" => $idgroup,
-            "name" => $request->name,
-            "description" => $request->description,
-            "avatar" => "storage/docs/default.jpg"
-        ]);
+        try {
+            DB::beginTransaction();
+            DB::commit();
 
-        Member::create([
-            "id" => $idmember,
-            "user_id" => Auth::user()->id,
-            "group_id" => $idgroup,
-            "access" => "creator",
-            "status" => true,
-        ]);
+            $code = date("mds").rand(000,999);
+            $idgroup = "grp".$code;
+            $idmember = "mbr".$code;
+            $idcontent = "mag".$code;
+            $idfile = "file".$code;
 
-        $newMagz = Content::create([
-            "id" => $idcontent,
-            "member_id" => $idmember,
-            "group_id" => $idgroup,
-            "head"=> "New Group Created",
-            "body" => "Getting started. Here is what to know about groups",
-            "type" => "magazine"
-        ]);
+            $newGroup = Group::create([
+                "id" => $idgroup,
+                "name" => $request->name,
+                "description" => $request->description,
+                "avatar" => "storage/docs/default.jpg"
+            ]);
 
-        File::create([
-            "id" => $idfile,
-            "content_id" => $idcontent,
-            "filename" => "default.jpg",
-            "location" => "storage/docs/default.jpg",
-            "filetype" => "jpg",
-        ]);
+            Member::create([
+                "id" => $idmember,
+                "user_id" => Auth::user()->id,
+                "group_id" => $idgroup,
+                "access" => "creator",
+                "status" => true,
+            ]);
 
+            Content::create([
+                "id" => $idcontent,
+                "member_id" => $idmember,
+                "group_id" => $idgroup,
+                "head"=> "New Group Created",
+                "body" => "Getting started. Here is what to know about groups",
+                "type" => "magazine"
+            ]);
+
+            File::create([
+                "id" => $idfile,
+                "content_id" => $idcontent,
+                "filename" => "default.jpg",
+                "location" => "storage/docs/default.jpg",
+                "filetype" => "jpg",
+            ]);
+        
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect(URL::previous());            
+        }
         return redirect()->route('group.show',$newGroup);
+
+
     }
 
     /**
@@ -176,7 +188,8 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        dd($group);
+        $group->delete();
+        return redirect()->route('home');
     }
 
     /**

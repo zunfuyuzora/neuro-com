@@ -1,33 +1,4 @@
-@extends('extends.dashboard',['_pagename'=> 'Profile','_backLink'=>route('home')])
-
-@section('card-content')
-
-    {{-- 
-        #####
-        ##  WIDE SCREEN - GROUP SELECTION
-        #####
-        --}}
-
-<div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
-    <div class="container py-3">
-        <ul class="list-group">
-            <li class="list-group-item ">
-                <a href="#">Private</a>
-            </li>
-            <li class="list-group-item active">
-                <a href="#">Grup #1</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Kelompok ABC</a>
-            </li>
-        </ul>
-        <div class="form-group">
-        <a href="#" class="my-2 btn btn-primary">
-            Buat Grup
-        </a></div>
-    </div>
-</div>
-@endsection
+@extends('extends.dashboard',['_pagename'=> 'Profile','_backLink'=>URL::previous()])
 
 @section('main-content')
 
@@ -37,7 +8,35 @@
     <div id="metadata" class="p-4 mb-3 rounded shadow-sm bg-white">
         <div class="container">
             <div class="container">
-                <h5 class="font-weight-bold">Biodata</h5>
+                <h5 class="font-weight-bold">Profile Detail</h5>
+                @if (!$access)
+                    <table class="table table-borderless">
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="pic-avatar">
+                                    <img src="{{asset($user->avatar)}}" alt="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Full Name</td>
+                            <td>{{$user->full_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>{{"@".$user->username}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{$user->email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Bio</td>
+                            <td>{{$user->bio}}</td>
+                        </tr>
+                    </table>
+                @else
                 <form action="{{route('updateData', $user->id)}}" method="POST" class="form-group">
                     @csrf
                     <input type="hidden" name="_method" value="PUT">
@@ -77,10 +76,13 @@
                     {{Session::get('errorUpdateData')}}
                 </div>
                 @endif
+                @endif
+
             </div>
         </div>
     </div>
-
+@if ($access)
+    
     <div id="password" class="p-4 mb-3 rounded shadow-sm bg-white">
         <div class="container">
             <div class="container">
@@ -155,6 +157,8 @@
             </div>
 
         </div>
+
+@endif
 </div>
 
 @endsection
