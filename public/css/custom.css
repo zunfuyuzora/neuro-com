@@ -335,6 +335,7 @@ a.box.create:focus,
 
 .message .text {
     padding: 0.2em 0;
+    white-space: pre-wrap;
 }
 
 .message .time {

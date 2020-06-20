@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use App\Member;
+use App\Message;
 
 class WebSocketController extends Controller implements MessageComponentInterface
 {
@@ -76,9 +77,12 @@ class WebSocketController extends Controller implements MessageComponentInterfac
                     $target = $this->subscriptions[$from->resourceId];
                     foreach($this->subscriptions as $id => $channel){
                         if($target == $channel && $id !== $from->resourceId){
-        echo sprintf('Connection %d sending message "%s" to other connection%s'."\n", $from->resourceId, $data->message, $numRecv == 1 ? '' : 's');
+                            echo sprintf('Connection %d sending message "%s" to other connection%s'."\n", $from->resourceId, $data->message, $numRecv == 1 ? '' : 's');
+                            
                             $member = Member::where('id', $data->member)->first();
                             $name = $member->user->full_name;
+                            
+                            //Broadcast the message
                             $this->users[$id]->send(json_encode([            
                                 'message' => $data->message,
                                 'name' => $name,
@@ -86,6 +90,13 @@ class WebSocketController extends Controller implements MessageComponentInterfac
                             ]));
                         }
                     }
+                    //Saving to database
+                    Message::create([
+                        "member_id"=> $data->member,
+                        "group_id"=> $target,
+                        "message"=>$data->message,
+                        "created_at"=>$data->time
+                    ]);
                 }
         }
         // if(is_null($this->connections[$conn->resourceId]['user_id'])){

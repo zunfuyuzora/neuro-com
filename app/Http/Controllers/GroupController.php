@@ -11,6 +11,7 @@ use App\Member;
 use App\Content;
 use App\Board;
 use App\File;
+use App\Message;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
@@ -200,7 +201,8 @@ class GroupController extends Controller
     {
         $uid = Auth::user()->id;
         $member = Member::where('group_id', $group->id)->where('user_id', $uid)->first();
-        return view('group.chat', ['group_data' => $group, 'member'=>$member]);
+        $messages = Message::where('group_id',$group->id)->get();
+        return view('group.chat', ['group_data' => $group, 'member'=>$member, 'messages'=>$messages]);
     }
 
     /**

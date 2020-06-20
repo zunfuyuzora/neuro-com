@@ -16,13 +16,25 @@
                 <p id="status"></p> </p>
                 </div>
                 </div>
+
+            @if (count($messages)>0)
+            @foreach ($messages as $m)
+                <div class="message {{$m->member_id == $member->id ? "self" : ""}}">
+                    <div class="wrapper">
+                        <div class="user">{{$m->member->user->full_name}}</div>
+                        <div class="text">{{$m->message}}</div>
+                        <div class="time">{{$m->created_at}}</div>
+                    </div>
+                </div>
+            @endforeach 
+         @endif
            </div>
         </div>
         <div class="chat-form">
-            <form action="" id="text-message">
+            <form id="text-message">
                 <input type="hidden" id="memberId" name="memberId" value="{{$member->id}}">
                 <textarea name="txt_message" id="message_box" rows="2" class="message-box form-control"></textarea>
-                <button type="submit" class="btn btn-primary" id="#sendMessageButton">Send</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
             </form>
         </div>
     </div>
@@ -31,15 +43,49 @@
 @push('script')
     <script>
     $(document).ready(function(){
-            
+        function getCaret(el) { 
+            if (el.selectionStart) { 
+                return el.selectionStart; 
+            } else if (document.selection) { 
+                el.focus();
+                var r = document.selection.createRange(); 
+                if (r == null) { 
+                    return 0;
+                }
+                var re = el.createTextRange(), rc = re.duplicate();
+                re.moveToBookmark(r.getBookmark());
+                rc.setEndPoint('EndToStart', re);
+                return rc.text.length;
+            }  
+            return 0; 
+        }
+
         var socketStatus = document.getElementById('status');
         var form = document.getElementById('text-message');
         var messageField = document.getElementById('message_box');
         var memberData = document.getElementById('memberId');
+        var sendButton = document.getElementById('sendMessageButton');
 
         var chatContainer = document.getElementById('chat-container');
         var groupChat = document.getElementById('chat-scrollable');
         groupChat.scrollTop = groupChat.scrollHeight;
+
+        var messageBox = document.getElementById('message_box');
+        messageBox.onkeyup = function(e){
+            if(e.keyCode == 13) {    
+                var content = this.value;  
+                var caret = getCaret(this);          
+                if(event.shiftKey){
+                    this.value = content.substring(0, caret - 1) + "\n" + content.substring(caret, content.length);
+                    event.stopPropagation();
+                } else {
+                    this.value = content.substring(0, caret - 1) + content.substring(caret, content.length);
+                    sendButton.click();
+                }
+            }
+        }
+
+
         
 
         var ws = new WebSocket("ws://localhost:8090/");
@@ -58,9 +104,6 @@
             var messageContainer = document.createElement('div');
             messageContainer.className= 'message';
             let data = JSON.parse(event.data);
-            console.log("Message From = " + data.name);
-            console.log("Said = " + data.message);
-            console.log("At time = " + data.time);
             messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+data.name+'</div><div class="text">'+data.message+'</div><div class="time">'+data.time+'</div></div>';
             chatContainer.appendChild(messageContainer);
         };
@@ -95,6 +138,8 @@
             chatContainer.appendChild(messageContainer);
 
             messageField.value = '';
+        groupChat.scrollTop = groupChat.scrollHeight;
+
 
             return false;
         }
