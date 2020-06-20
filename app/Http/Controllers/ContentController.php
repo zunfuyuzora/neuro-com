@@ -14,25 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class ContentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -105,17 +86,6 @@ class ContentController extends Controller
 
             return redirect(route('mading.show',['group'=>$request->route('group'),'content'=>$idmag]));
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Content  $content
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Content $content)
-    {
-        //
     }
 
     /**
@@ -251,5 +221,74 @@ class ContentController extends Controller
         }
 
         return redirect()->route('task.show', ['group'=>$group,'content'=>$content->id])->with('success', 'Task Updated Successfully');
+    }
+
+    /**
+     * Handle Module Upload
+     * 
+     */
+    public function uploadModule($group, Request $request)
+    {
+        $request->validate([
+            'module'=>'required|file|max:40000|mimes:pdf,docx,doc,ppt,pptx,png,jpg,jpeg',
+            'head'=>'required|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            DB::commit();
+            $member = Member::where("group_id",$group)
+                        ->where('user_id',Auth::user()->id)->first();
+
+            $code = date("mds").rand(000,999);
+            $id = "mod".$code;
+            $idfile = "file".$code;
+
+            Content::create([
+                'id' => $id,
+                'member_id' => $member->id,
+                'group_id' => $group,
+                'head' => $request->head,
+                'body' => $request->file('module')->getClientOriginalName(),
+                'type' => "module",
+            ]); 
+    
+            $ext = ".".$request->file('module')->extension();
+            $name = $code."-".$request->file('module')->getClientOriginalName();
+    
+            $request->file('module')->storeAs('public/docs/',$name);
+    
+            File::create([
+                "id" => $idfile,
+                "content_id" => $id,
+                "filename" => $name,
+                "location" => "storage/docs/".$name,
+                "filetype" => $ext,
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
+
+        return redirect()->route('group.show',$group);
+    }
+
+    /**
+     * Handle Module Remove
+     * 
+     */
+    public function removeModule($group, Request $request)
+    {
+        $request->validate([
+            'module_id'=>"required",
+        ]);
+        $member = Member::where("group_id",$group)
+                    ->where('user_id',Auth::user()->id)->first();
+        if($member){
+            $content = Content::where('id', $request->module_id)->first();
+            $file = File::where('content_id', $content->id)->first();
+            $file->delete();
+            $content->delete();
+        }
+        return redirect()->route('group.show', $group);
     }
 }

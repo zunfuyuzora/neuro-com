@@ -32,6 +32,10 @@
                 <h2 class="text-blue">{{$magazine}}</h2>
                 <p>Magazine Posted</p>
             </div>
+            <div class="report-scalar text-center">
+                <h2 class="text-blue">{{$message}}</h2>
+                <p>Messages Shared</p>
+            </div>
         </div>
     </div>
 

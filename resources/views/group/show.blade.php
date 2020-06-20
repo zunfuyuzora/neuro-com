@@ -124,32 +124,79 @@
         #####
         --}}
 
-    <p class="h5">Modul</p>
+    <p class="h5">Module</p>
     <div class="container my-3 p-0">
         <div class="border py-2 px-3">
             <table class="table table-sm table-borderless" style="table-layout: fixed;">
-                @if (isset($highlight))
+                @if (count($module)>0)
+                @foreach ($module as $m)
                     
                 <tr>
                     <td class="text-truncate w-25">
-                        <a href="#">frank144</a>     
+                        <a href="{{route('profile', $m->member->user->id)}}">{{$m->member->user->username}}</a>     
                     </td>
                     <td class="text-truncate w-50">
-                        Modul Penelitian Tentang Siklus Kehidupan
+                        {{$m->head}}
                     </td>
                     <td class="text-right">
-                        <a href="#">Download</a>
+                        <a class="text-danger" onclick="removeModule('{{$m->id}}')"><i class="fa fa-trash"></i></a> |
+                        <a href="{{asset($m->file->location)}}" target="_blank">View</a>
                     </td>
                 </tr>
+
+                @endforeach
                 @else
                 <tr>
-                    <td class="text-center">No Module for This Group</td>
+                    <td class="text-center" colspan="3">No Module for This Group</td>
                 </tr>
                 @endif
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <button class="btn btn-sm btn-outline-primary" type="button" data-toggle="modal" data-target="#createModule">Upload Module</button>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
 </div>
+
+<form action="{{route('module.delete', $group_data->id)}}" id="rmModuleForm" method="POST">
+    @csrf 
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="module_id" id="module_id">;
+</form>
+{{-- MODULE MADING PAGE --}}
+
+<div class="modal fade" tabindex="-1" role="dialog" id="createModule">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Magazine</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('module.upload', $group_data->id)}}" method="POST" id="uploadModule" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="head">Title</label>
+                    <input type="text" id="head" name="head" class="form-control" placeholder="Header line" required>
+                </div>
+                <div class="form-group">
+                    <label for="file">File</label>
+                    <input type="file" name="module" id="file" class="form-control" required>
+                    <p class="text-muted">File should be lower than 40MB. <br>Supported file extension are .pdf/.doc/.docx</p>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" form="uploadModule">Upload Module</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {{-- MODAL MADING PAGE --}}
 
 <div class="modal fade" tabindex="-1" role="dialog" id="createMagazine">
@@ -217,12 +264,13 @@
   </div>
 @endsection
 @push('script')
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io('localhost:8000');
-        socket.on('news', (data)=>{
-            console.log(data);
-            socket.emit('event')=>{my:data};
-        })
-    </script>
+<script>
+        var deleteForm = document.getElementById('rmModuleForm');
+        var module_id = document.getElementById('module_id');
+
+        function removeModule(id){
+            module_id.value = id;
+            deleteForm.submit();
+        }
+</script>
 @endpush

@@ -65,7 +65,11 @@ Route::middleware(['auth'])->group(function (){
 
         Route::get('/{group}/t/{content}', 'ContentController@taskShow')->name('task.show');
         Route::get('/{group}/t/{content}/edit', 'ContentController@taskEdit')->name('task.edit');
-        Route::put('/{group}/t/{content}/update', 'ContentController@taskUpdate')->name('task.update');        
+        Route::put('/{group}/t/{content}/update', 'ContentController@taskUpdate')->name('task.update');      
+
+        Route::post('/{group}/module','ContentController@uploadModule')->name('module.upload');
+        Route::delete('/{group}/module/','ContentController@removeModule')->name('module.delete');
+        
     });
     });
 
@@ -80,29 +84,3 @@ Route::middleware(['auth'])->group(function (){
     });
 
 });
-
-// ///DONE
-// Route::get('/profile', function() {
-//     return view('profile');
-// });
-
-// ///DONE
-// Route::get('/group/slug-name', function() {
-//     return view('group');
-// });
-
-// ///DONE
-// Route::get('/group/slug-name/settings', function() {
-//     return view('settings');
-// });
-
-// ///DONE
-// Route::get('/board/unique-serial', function() {
-//     return view('board');
-// });
-
-// ///DONE
-// Route::get('/task/unique-serial', function() {
-//     return view('task');
-// });
-

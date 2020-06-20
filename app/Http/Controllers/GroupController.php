@@ -127,11 +127,11 @@ class GroupController extends Controller
     {
         $magazine = Content::where('group_id', $group->id)->where('type','magazine')->get();
         $board = Board::where('group_id',$group->id)->get();
-
+        $module = Content::where('group_id', $group->id)->where('type','module')->get();
         $membership = $this->getMemberships($group->id);
         $task = Content::where('type', 'task')
                         ->where('member_id', $membership->id)->orderBy('created_at')->get();
-        return view('group.show', ['group_data' => $group, 'magazine' => $magazine,'board'=>$board,'highlight'=>$task]);
+        return view('group.show', ['group_data' => $group, 'magazine' => $magazine,'board'=>$board,'highlight'=>$task,'module'=>$module]);
     }
 
     /**

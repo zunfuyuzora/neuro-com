@@ -9,6 +9,7 @@ use App\Board;
 use App\Group;
 use App\Content;
 use App\Comment;
+use App\Message;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,6 +60,7 @@ class HomeController extends Controller
         $eTask = Content::where('type','task')->count();
         $eMagazine = Content::where('type','magazine')->count();
         $eModule = Content::where('type','module')->count();
+        $m = Message::all()->count();
         
         return view('admin.dashboard', [
             'user'=>$a,
@@ -67,7 +69,8 @@ class HomeController extends Controller
             'comment'=>$d,
             'magazine'=>$eMagazine,
             'task'=>$eTask,
-            'module'=>$eModule
+            'module'=>$eModule,
+            'message'=>$m
         ]);
     }
 
