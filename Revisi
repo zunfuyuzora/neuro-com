@@ -1,0 +1,9 @@
+1. magazine picture max file nya naikin jadi 5MB
+2. module jadiin kondisional button(if .pdf bisa view di new tab, else langsung download di new tab)
+3. menu board & modul crash di navbar top
+4. buat create admin di menu user admin
+5. buat profile di admin(gausah sedetail user, yang penting ada change password sama data crusial aja(ex : nama,email,username)).
+6. http://localhost:8000/g/grp062243745/m/mag062243745 disini masih ada avatar/foto yang ngawur tuh dibagian comment
+7. tambahin menu home di navbar top
+8. http://localhost:8000/g/grp062243745/t/task062244427/edit disini due date textfield nya diganti jadi type date aja terus combine sama jam nya
+9. http://localhost:8000/g/grp062243745/t/task062244427 avatar comment nya masih ngawur
