@@ -61,7 +61,7 @@
             @csrf
             <input type="hidden" name="_method" value="PUT">
             <input type="file" name="picture" class="file-input-custom w-100" id="picture">
-            <p style="color:gray">Maximum file upload 2 MB (in JPG/PNG format)</p>
+            <p style="color:gray">Maximum file upload 5 MB (in JPG/PNG format)</p>
             <div class="text-right">
             <button type="submit" class="btn btn-primary" form="uploadPicture">Change Picture</button>
             </div>

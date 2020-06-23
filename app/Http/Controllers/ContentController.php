@@ -141,7 +141,7 @@ class ContentController extends Controller
     {
         
         $request->validate([
-            'picture' => 'mimes:jpeg,jpg,png|required|file|max:2000',
+            'picture' => 'mimes:jpeg,jpg,png|required|file|max:5000',
         ]);
 
         $uid = $content->member->user->id;
