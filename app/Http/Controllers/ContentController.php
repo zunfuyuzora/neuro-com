@@ -95,7 +95,7 @@ class ContentController extends Controller
     public function mading($group,Content $content)
     {
         $comments =  Comment::where('content_id', $content->id)->get();
-        return view('mading.show', ['mading' => $content, 'comments' => $comments,'group'=>$group]);
+        return view('mading.show', ['content' => $content, 'comments' => $comments,'group'=>$group]);
     }
     /**
      * Display Magz Edit Form
@@ -179,7 +179,7 @@ class ContentController extends Controller
         $comments =  Comment::where('content_id', $content->id)->get();
         $access = $content->member->user->id == Auth::user()->id ? true : false;
 
-        return view('task.show', ['task' => $content, 'comments' => $comments, 'files'=>$files,'access'=>$access]);
+        return view('task.show', ['content' => $content, 'comments' => $comments, 'files'=>$files,'access'=>$access]);
     }
 
     /**
