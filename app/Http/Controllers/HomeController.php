@@ -24,6 +24,15 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
+    /**
+     * Show landing page
+     * 
+     */
+    public function landing()
+    {
+        return view('landing');
+    }
     
 
     /**
@@ -61,6 +70,12 @@ class HomeController extends Controller
         $eMagazine = Content::where('type','magazine')->count();
         $eModule = Content::where('type','module')->count();
         $m = Message::all()->count();
+
+        $chart = collect([]);
+        for ($i=1; $i < 13; $i++) { 
+            $usr = User::whereMonth('created_at',$i)->count();
+            $chart->push($usr);
+        }
         
         return view('admin.dashboard', [
             'user'=>$a,
@@ -70,7 +85,8 @@ class HomeController extends Controller
             'magazine'=>$eMagazine,
             'task'=>$eTask,
             'module'=>$eModule,
-            'message'=>$m
+            'message'=>$m,
+            'chart'=>$chart->toJson()
         ]);
     }
 

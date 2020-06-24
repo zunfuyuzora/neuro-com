@@ -50,7 +50,13 @@ class ProfileController extends Controller
             $message = "Other person have same username";
         }
 
-        return redirect()->route('profile', $user->id)->with($code, $message);
+        $target="profile";
+        
+        if (Auth::user()->level == "admin") {
+            $target = "admin.".$target;
+        }
+
+        return redirect()->route($target, $user->id)->with($code, $message);
     }
 
     /**
@@ -77,7 +83,13 @@ class ProfileController extends Controller
             $message = "There is an error in the server";
         }
 
-        return redirect()->route('profile', $user->id)->with($code, $message);
+        $target="profile";
+        
+        if (Auth::user()->level == "admin") {
+            $target = "admin.".$target;
+        }
+
+        return redirect()->route($target, $user->id)->with($code, $message);
     }
 
     /**
@@ -107,7 +119,14 @@ class ProfileController extends Controller
             $code = "errorUpdateAvatar";
             $message = "Sorry, We've got an error in the server";
         }
-        return redirect()->route('profile', $user->id)->with($code, $message);
+
+        $target="profile";
+        
+        if (Auth::user()->level == "admin") {
+            $target = "admin.".$target;
+        }
+
+        return redirect()->route($target, $user->id)->with($code, $message);
 
     }
 }

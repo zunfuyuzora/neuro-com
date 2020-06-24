@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 ///DONE
-Route::get('/', function () {
-    return view('landing');
-})->name('landing');
+Route::get('/', 'HomeController@landing')->name('landing');
 
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 Route::get('/signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
@@ -81,6 +79,9 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/manage/group/{group}', 'AdminController@groupDetail')->name('admin.group.detail');
         Route::get('/manage/user/', 'AdminController@user')->name('admin.user');
         Route::get('/manage/user/{user}', 'AdminController@userDetail')->name('admin.user.detail');
+        Route::get('/admin/{user}', 'AdminController@profile')->name('admin.profile');
+        Route::get('/manage/admin','AdminController@create')->name('admin.new.create');
+        Route::post('/manage/admin/save', 'AdminController@save')->name('admin.new.save');
     });
 
 });

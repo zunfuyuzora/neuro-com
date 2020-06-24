@@ -8,8 +8,11 @@
         <div class="col-sm-12 col-md-3 col-lg-2 p-0">
             <div id="admin-sidebar">
                 <div>
-                <div class="profile">
-                    <div class="text-capitalize">{{Auth::user()->full_name}}</div>
+                <div class="profile d-flex flex-column align-items-center">
+                    <div class="pic-avatar">
+                        <img src="{{asset(Auth::user()->avatar)}}" alt="" srcset="">
+                    </div>
+                    <div class="text-capitalize font-weight-bold mt-2">{{Auth::user()->full_name}}</div>
                 </div>
                 <div class="control-panel">
                     <div class="list-group bg-transparent">
@@ -27,6 +30,16 @@
                         {{$_page == "user" ? "active" : ""}}
                         ">
                             User
+                        </a>
+                        <a href="{{route('admin.profile', Auth::user()->id)}}" class="list-group-item
+                        {{$_page == "profile" ? "active" : ""}}
+                        ">
+                            Profile
+                        </a>
+                        <a href="{{route('admin.new.create')}}" class="list-group-item
+                        {{$_page == "newAdmin" ? "active" : ""}}
+                        ">
+                            New Admin
                         </a>
                     </div>
                 </div>
