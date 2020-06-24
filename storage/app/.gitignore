@@ -2,4 +2,6 @@
 !public/
 !public/avatars
 !public/avatars/default.jpg
+!public/docs
+!public/avatars/default.jpg
 !.gitignore
