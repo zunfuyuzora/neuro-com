@@ -28,19 +28,15 @@
 
             <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="#">
-                        <span class="nav-link-inner-text">Board</span></a>
+                    <a class="nav-link nav-link-icon" href="{{route('home')}}">
+                        <span class="nav-link-inner-text">Home</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{route('profile', Auth::user()->id)}}">
                         <span class="nav-link-inner-text">Profile</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="#">
-                        <span class="nav-link-inner-text">Modul</span></a>
-                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-link-icon" href="#!" onClick="document.getElementById('logout_form').submit()">Keluar</a>
+                    <a class="nav-link nav-link-icon" href="#!" onClick="document.getElementById('logout_form').submit()">Logout</a>
                         <form action="
                         {{route('logout')}}
                         " class="d-none hidden" method="POST" id="logout_form">
