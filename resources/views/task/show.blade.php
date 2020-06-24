@@ -31,7 +31,8 @@
                 <div class="col-9">
                     <div class="wrappers">
                     <p class="h6" style="color:gray">Due Date:</p>
-                    <textarea name="descipription" id="desc" cols="30" rows="1" class="form-control mb-2" readonly>{{$content->progress->due_date}}</textarea>
+                    <input type="date" id="due_date" class="form-control mb-2" disabled value="{{ date("Y-m-d", strtotime($content->progress->due_date))}}">
+                    <input type="time" id="due_time" class="form-control mb-2" disabled value="{{ date("H:i", strtotime($content->progress->due_date))}}">
                     <p class="h6" style="color:gray">Detail:</p>
                     <textarea name="description" id="desc" cols="30" rows="5" class="form-control mb-2" readonly>{{$content->body}}</textarea>
                     <p class="h6" style="color:gray">Attachment</p>

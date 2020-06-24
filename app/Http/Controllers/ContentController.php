@@ -202,14 +202,16 @@ class ContentController extends Controller
             'description' => 'required',
             'status' => 'required',
             'due_date' => 'required',
+            'due_time' => 'required',
         ]);
-        
+
+        $datetime = $request->due_date." ".$request->due_time;
         $content->head = $request->task;
         $content->body = $request->description;
 
         $progress = Progress::where('content_id',$content->id)->first();
         $progress->status = $request->status;
-        $progress->due_date = $request->due_date;
+        $progress->due_date = $datetime;
         try {
             DB::beginTransaction();
             DB::commit();
@@ -230,7 +232,7 @@ class ContentController extends Controller
     public function uploadModule($group, Request $request)
     {
         $request->validate([
-            'module'=>'required|file|max:40000|mimes:pdf,docx,doc,ppt,pptx,png,jpg,jpeg',
+            'module'=>'required|file|max:40000|mimes:pdf,docx,doc,ppt,pptx,png,jpg,jpeg,xlsx,xls',
             'head'=>'required|string',
         ]);
 

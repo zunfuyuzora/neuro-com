@@ -1,33 +1,5 @@
 @extends('extends.dashboard',['_pagename'=>'Board','_backLink'=>route('group.show', $board->group_id),'groupId'=>$board->group_id])
 
-@section('card-content')
-
-    {{-- 
-        #####
-        ##  WIDE SCREEN - GROUP SELECTION
-        #####
-        --}}
-<div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
-    <div class="container py-3">
-        <ul class="list-group">
-            <li class="list-group-item ">
-                <a href="#">Private</a>
-            </li>
-            <li class="list-group-item active">
-                <a href="#">Grup #1</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Kelompok ABC</a>
-            </li>
-        </ul>
-        <div class="form-group">
-        <a href="#" class="my-2 btn btn-primary">
-            Buat Grup
-        </a></div>
-    </div>
-</div>
-@endsection
-
 @section('main-content')
 
 <div class="container d-flex flex-column justify-content-center bg-white p-4 shadow-sm mb-4">
@@ -38,7 +10,7 @@
                 <div class="h4 font-weight-bold">
                     <a href="#objective" title="Click to display objective" data-toggle="collapse" href="#objective" role="button" aria-expanded="false" aria-controls="objective">{{$board->name}}</a> 
                     <span class="text-small">
-                    <a href="#editNameModal" role="button" data-toggle="modal"  aria-expanded="false" aria-controls="#editnameModal" title="Change Group Name"><i class="fa fa-edit"></a></i></span>
+                    <a href="#editNameModal" role="button" data-toggle="modal"  aria-expanded="false" aria-controls="#editnameModal" title="Change Board Name"><i class="fa fa-edit"></a></i></span>
                 </div>
             </div>
             <div class="col-3 text-right d-none">

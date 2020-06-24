@@ -127,7 +127,7 @@
     <p class="h5">Module</p>
     <div class="container my-3 p-0">
         <div class="border py-2 px-3">
-            <table class="table table-sm table-borderless" style="table-layout: fixed;">
+            <table class="table table-sm table-border" style="table-layout: fixed;">
                 @if (count($module)>0)
                 @foreach ($module as $m)
                     
@@ -135,12 +135,13 @@
                     <td class="text-truncate w-25">
                         <a href="{{route('profile', $m->member->user->id)}}">{{$m->member->user->username}}</a>     
                     </td>
-                    <td class="text-truncate w-50">
+                    <td class="text-truncate">
                         {{$m->head}}
                     </td>
-                    <td class="text-right">
-                        <a class="text-danger" onclick="removeModule('{{$m->id}}')"><i class="fa fa-trash"></i></a> |
-                        <a href="{{asset($m->file->location)}}" target="_blank">View</a>
+                    <td class="text-center d-flex justify-content-around">
+                        <a href="{{asset($m->file->location)}}" target="_blank">View/Download</a>
+
+                        <a class="text-danger" onclick="removeModule('{{$m->id}}')"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
 
@@ -151,7 +152,7 @@
                 </tr>
                 @endif
                 <tr>
-                    <td colspan="3" class="text-center">
+                    <td colspan="3" class="text-center pt-3">
                         <button class="btn btn-sm btn-outline-primary" type="button" data-toggle="modal" data-target="#createModule">Upload Module</button>
                     </td>
                 </tr>
@@ -186,7 +187,7 @@
                 <div class="form-group">
                     <label for="file">File</label>
                     <input type="file" name="module" id="file" class="form-control" required>
-                    <p class="text-muted">File should be lower than 40MB. <br>Supported file extension are .pdf/.doc/.docx</p>
+                    <p class="text-muted">File should be lower than 40MB. <br>Supported file extension are .pdf/.doc/.docx/.xlsx/.xls</p>
                 </div>
             </form>
         </div>

@@ -38,10 +38,11 @@
                     <textarea name="description" id="desc" cols="30" rows="5" class="form-control mb-2">{{$task->body}}</textarea>
 
                     <p class="h6" style="color:gray">Due Date:</p>
-                    <input type="datetime" name="due_date" id="due_date" class="form-control mb-2" value="{{$task->progress->due_date}}">
-                    <div class="form-group">
+                    <input type="date" name="due_date" id="due_date" class="form-control mb-2" value="{{ date("Y-m-d", strtotime($task->progress->due_date))}}">
+                    <input type="time" name="due_time" id="due_time" class="form-control mb-2" value="{{ date("H:i", strtotime($task->progress->due_date))}}">
                     <p class="h6" style="color:gray">Status:</p>
-                    <input type="radio" name="status" id="ongoing" class="mr-2" value="ongoing"><label for="ongoing" class=""> On-Going</label>
+                    <div class="form-group">
+                    <input type="radio" name="status" id="ongoing" class="mr-2" value="ongoing" checked><label for="ongoing" class=""> On-Going</label>
                     <input type="radio" name="status" id="finish" class="mx-2" value="finish"><label for="finish" class=""> Finish</label>
                     </div>
                     </form>
