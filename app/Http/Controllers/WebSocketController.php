@@ -54,8 +54,6 @@ class WebSocketController extends Controller implements MessageComponentInterfac
         // $userId = $this->connections[$conn->resourceId]['user_id'];
         $this->clients->detach($conn);
         echo "An error has occurred with user $conn->resourceId: {$e->getMessage()}\n";
-        // unset($this->connections[$conn->resourceId]);
-        // $conn->close();
     }
     
      /**
@@ -99,29 +97,5 @@ class WebSocketController extends Controller implements MessageComponentInterfac
                     ]);
                 }
         }
-        // if(is_null($this->connections[$conn->resourceId]['user_id'])){
-        //     $this->connections[$conn->resourceId]['user_id'] = $msg;
-        //     $onlineUsers = [];
-        //     foreach($this->connections as $resourceId => $connection){
-        //         $connection['conn']->send(json_encode([$conn->resourceId => $msg]));
-        //         if($conn->resourceId != $resourceId)
-        //             $onlineUsers[$resourceId] = $connection['user_id'];
-        //     }
-        //     $conn->send(json_encode(['online_users' => $onlineUsers]));
-        //     echo $msg . " ";
-        //     echo $conn->resourceId. " ";
-
-        //     echo sprintf ('Connection %d sending message "%s" to other connection'."\n", $conn->resourceId, $msg,); 
-        // } else{
-        //     $fromUserId = $this->connections[$conn->resourceId]['user_id'];
-        //     $msg = json_decode($msg, true);
-        //     echo $msg;
-        //     echo "sending message";
-        //     $this->connections[$msg['to']]['conn']->send(json_encode([
-        //         'msg' => $msg['content'],
-        //         'from_user_id' => $fromUserId,
-        //         'from_resource_id' => $conn->resourceId
-        //     ]));
-        // }
     }
 }

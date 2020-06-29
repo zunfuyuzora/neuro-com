@@ -7,6 +7,7 @@ use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use App\Http\Controllers\WebSocketController;
+use Illuminate\Support\Facades\Request;
 
 class WebSocketServer extends Command
 {
@@ -41,14 +42,16 @@ class WebSocketServer extends Command
      */
     public function handle()
     {
+        $port = 8090;
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
                     new WebSocketController()
                 )
             ),
-            8090
+            $port
         );
+        $this->line("Running Websocket Server at ".$_ENV['APP_URL'].":".$port);
         $server->run();
     }
 }

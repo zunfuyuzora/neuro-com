@@ -1,7 +1,6 @@
 @extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home'),'groupId'=>$group_data->id])
 
 @section('main-content')
-
 <div class="container d-flex flex-column justify-content-center bg-white p-4 shadow-sm mb-4">
     <div id="group-control" class=" text-center">
         <h3>Group Chat</h3>
@@ -39,9 +38,16 @@
         </div>
     </div>
 </div>
+
 @endsection
 @push('script')
+<?php
+    $host = $_SERVER['HTTP_HOST'];
+    $host = explode(":",$host);
+    $websocket = $host[0].":8090";
+?>
     <script>
+        
     $(document).ready(function(){
         function getCaret(el) { 
             if (el.selectionStart) { 
@@ -87,8 +93,8 @@
 
 
         
-
-        var ws = new WebSocket("ws://localhost:8090/");
+        var websocket = "{{$websocket}}";
+        var ws = new WebSocket("ws://"+websocket);
 
         ws.onopen = function () {
             socketStatus.innerHTML = 'Connected';
@@ -143,6 +149,7 @@
 
             return false;
         }
+
 
     });
     </script>
