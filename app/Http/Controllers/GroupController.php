@@ -299,7 +299,7 @@ class GroupController extends Controller
             //
             return redirect()->route('group.guest', $g->id);
         }else {
-            return "not found";
+            return view('group.notfound');
         }
     }
 
