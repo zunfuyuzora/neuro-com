@@ -60,6 +60,18 @@
 
         </div>
     </div>
+    <div id="request_member">
+        <div class="container p-4 px-5 mb-3 bg-white">
+            <div class="row justify-content-between">
+                <div>
+                    New Member Join Request: {{count($members->where('status', 0))}}
+                </div>
+                <div>
+                    <a href="{{route('group.request', $group_data->id)}}" class="btn btn-sm btn-outline-primary">See Request</a>
+                </div>
+            </div>
+        </div>
+    </div>
         {{-- MEMBER SECTION --}}
         <div id="members">
             <div id="members-container" class="p-4 mb-3 rounded shadow-sm bg-white">
@@ -99,7 +111,9 @@
             <div class="container">
 
                 @foreach ($members as $m)
-                    
+                    <?php if ($m->status == 0) {
+                        continue;
+                    } ?>
                 <div class="row mb-4">
                     <div class="col overflow-hidden">
                         <div class="pic-avatar">

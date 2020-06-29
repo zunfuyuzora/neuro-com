@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/group/search','GroupController@search')->name('group.search');
     Route::post('/group/{group}/join','GroupController@joinGroup')->name('group.join');
     Route::get('/group/{group}/guest', 'GroupController@showGuest')->name('group.guest');
+    Route::get('/group/{group}/request', 'GroupController@memberRequest')->name('group.request');
+    Route::put('/group/{group}/approve', 'GroupController@approval')->name('group.approval');
 
     Route::post('/upload/{id}/attachment', 'FileController@uploadAttachment')->name('upload.attachment');
     Route::put('/{group}/addMember/invitation', 'GroupController@inviteMember')->name('group.inviteMember');

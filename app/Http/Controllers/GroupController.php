@@ -343,4 +343,29 @@ class GroupController extends Controller
         ]);
         return redirect(URL::previous());
     }
+
+    /**
+     * Show member join request
+     * 
+     */
+    public function memberRequest(Group $group){
+        $members = Member::where('group_id', $group->id)
+                    ->where('status', 0)
+                    ->get();
+        $isMember = Member::where('group_id', $group->id)
+                    ->where('user_id',Auth::user()->id)->first();
+        return view('group.request', ['members'=>$members,'group_data'=>$group, 'user_membership'=>$isMember]);
+    }
+
+    /**
+     * Handle approval request
+     * 
+     */
+    public function approval(Group $group, Request $request)
+    {
+        $members = Member::where('id', $request->member_id)->first();
+        $members->status = 1;
+        $members->save();
+        return redirect(URL::previous());
+    }
 }
