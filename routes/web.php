@@ -15,12 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 ///DONE
+Route::middleware(['guest'])->group(function(){
+    
 Route::get('/', 'HomeController@landing')->name('landing');
 
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 Route::get('/signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
 Route::post('/auth/register', 'Auth\RegisterController@register')->name('register');
 Route::post('/auth/login', 'Auth\LoginController@login')->name('authorize');
+});
 Route::post('/auth/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/group/{group}/invitation', 'GroupController@invitation')->name('group.invitation');

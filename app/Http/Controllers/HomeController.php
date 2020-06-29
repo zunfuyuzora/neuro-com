@@ -33,6 +33,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $level = Auth::user()->level;
+        if($level == "admin"){
+            return redirect()->route('admin.dashboard');
+        }
         $uid = Auth::user()->id;
         $memberships = Member::where('user_id', $uid)->get();
         $allTask = new Collection();
