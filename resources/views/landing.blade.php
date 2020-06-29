@@ -59,10 +59,9 @@
     </div>
 </div>
 
-<div id="section-2">
-    <div class="container bg-white">
+<div id="section-2" class="bg-white">
+    <div class="container">
     <div class="row py-5">
-            <div class="row align-items-center">
             <div class="col-12 col-md-6 order-0">
                 <div class="illust">
                     <img src="{{asset('images/illust-1.png')}}" alt="" class="img-fluid">
@@ -92,7 +91,6 @@
             </div>
         </div>
     </div>
-    </div>
 </div>
 
 <div id="section-3" class="section-3">
@@ -102,8 +100,8 @@
     </div>
 </div>
 
-<div id="section-4">
-    <div class="container p-md-5 p-2 my-5 text-center">
+<div id="section-4" class="bg-white py-5">
+    <div class="container p-md-5 p-2 text-center">
     <h4 class="font-weight-bold display-3">Daftar Gratis Sekarang</h4>
     <p style="color:gray" class="w-md-25 px-3 w-100">
         Sed labore assumenda rem? Voluptates velit nesciunt quaerat consequatur asperiores.
