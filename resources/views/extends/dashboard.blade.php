@@ -98,7 +98,8 @@
                     </div>
                 </div>
             </div>
-            <div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
+            <div id="group-selection" class="rounded-md-10 shadow-sm bg-white mb-3
+        {{($chat ?? "") ? "d-none d-md-block" : ""}}">
                 <div class="container py-3">
                     <h5>Group List</h5>
                     @if ($groups)

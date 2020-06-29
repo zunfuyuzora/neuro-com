@@ -1,18 +1,18 @@
-@extends('extends.template',['_pagename'=>'Settings','_backLink'=> route('group.show',$group->id)])
+@extends('extends.template',['_pagename'=>'Invitation','_backLink'=> route('group.show',$group->id)])
 
 @section('screen')
 
 <div id="invitation" class="container d-flex flex-column justify-content-center align-items-center" style="height: 100vh">
 
 
-    <div id="settings" class="p-4 mb-3 rounded shadow-sm bg-white">
+    <div id="invitation" class="p-4 mb-3 rounded shadow-sm bg-white">
         <div class="container">
             <div class="container text-center">
                 <h1 class="font-weight-bold">Group Invitation</h1>
                 <h3>You're invited to join "{{$group->name}}" via Invitation Link </h3>
                 @if (Auth::check())
                     Click Button Below to Proceed 
-                    <form action="{{route('group.newMember', $group->id)}}" method="POST" class="my-3 form-group">
+                    <form action="{{route('group.inviteMember', $group->id)}}" method="POST" class="my-3 form-group">
                         @csrf
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="userId" value="{{Auth::user()->id}}">

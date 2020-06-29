@@ -76,6 +76,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <label for="invite" class="input-group-text">Invite Link</label>
+                                </div>
+                                <input type="text" name="invite" id="invite" value="{{route('group.invitation',$group_data->id)}}" class="form-control">
+                            </div>
+                        </div>
                     </div>
                 @if ($user_membership->access == "member")
 

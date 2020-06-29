@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/group/{group}/guest', 'GroupController@showGuest')->name('group.guest');
 
     Route::post('/upload/{id}/attachment', 'FileController@uploadAttachment')->name('upload.attachment');
+    Route::put('/{group}/addMember/invitation', 'GroupController@inviteMember')->name('group.inviteMember');
 
     Route::middleware(['access'])->group(function(){
 

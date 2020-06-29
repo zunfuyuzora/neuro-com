@@ -348,6 +348,10 @@ a.box.create:focus,
     justify-content: flex-end;
 }
 
+.message.self .user {
+    color: #da8019 !important;
+}
+
 @media (min-width: 576px) {
     .carousel-item img {
         height: auto;

@@ -1,4 +1,4 @@
-@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home'),'groupId'=>$group_data->id])
+@extends('extends.dashboard',['_pagename'=>"group",'_backLink'=>route('home'),'groupId'=>$group_data->id,'chat'=>true])
 
 @section('main-content')
 <div class="container d-flex flex-column justify-content-center bg-white p-4 shadow-sm mb-4">

@@ -212,6 +212,14 @@ class GroupController extends Controller
      */
     public function invitation(Group $group)
     {
+        if (Auth::check()) {
+            $member = Member::where('group_id',$group->id)
+                            ->where('user_id', Auth::user()->id)
+                            ->first();
+            if ($member) {
+                return redirect()->route('group.show',$group->id);
+            }
+        }
         return view('group.invitation', ['group'=>$group]);
     }
 
@@ -223,41 +231,47 @@ class GroupController extends Controller
     {
         $code = date("mds").rand(000,999);
         $idmember = "mbr".$code;
-
-        if($request->invitation){
-            $request->validate([
-                'userId' => 'required',
-            ]);
-            $n = Member::create([
-                'id' => $idmember,
-                'user_id' => $request->userId,
-                'group_id' => $group->id,
-                'access' => 'member',
-                'status' => 1,
-            ]);
-            return redirect(route('group.show', $group->id));
-        }else{
-            $request->validate([
-                'username' => 'required|regex:/(^@[A-Z]??)\w+/',
-                'access' => 'required',
-            ]);
-            $usr = $request->username;
-            $usr = str_replace("@","", $usr);
-            $user = User::where('username', $usr)->first();
-            if(!$user){
-                return redirect(URL::previous());
-            }
-            $n = Member::create([
-                'id' => $idmember,
-                'user_id' => $user->id,
-                'group_id' => $group->id,
-                'access' => $request->access,
-                'status' => 1,
-            ]);
+        $request->validate([
+            'username' => 'required|regex:/(^@[A-Z]??)\w+/',
+            'access' => 'required',
+        ]);
+        $usr = $request->username;
+        $usr = str_replace("@","", $usr);
+        $user = User::where('username', $usr)->first();
+        if(!$user){
             return redirect(URL::previous());
-            
-
         }
+        $n = Member::create([
+            'id' => $idmember,
+            'user_id' => $user->id,
+            'group_id' => $group->id,
+            'access' => $request->access,
+            'status' => 1,
+        ]);
+        return redirect(URL::previous());
+        
+
+    }
+
+    /**
+     * Handle Invitation Member
+     * 
+     */
+    public function inviteMember(Group $group, Request $request)
+    {
+        $code = date("mds").rand(000,999);
+        $idmember = "mbr".$code;
+        $request->validate([
+            'userId' => 'required',
+        ]);
+        $n = Member::create([
+            'id' => $idmember,
+            'user_id' => $request->userId,
+            'group_id' => $group->id,
+            'access' => 'member',
+            'status' => 1,
+        ]);
+        return redirect(route('group.show', $group->id));
     }
 
     /**

@@ -1,61 +1,7 @@
 @extends('extends.dashboard',['_pagename'=>'Home'])
 @section('card-content')
 
-    {{-- 
-        #####
-        ##  WIDE SCREEN - GROUP SELECTION
-        #####
-        --}}
-
-<div id="group-selection" class="rounded-md-10 d-none d-md-block shadow-sm bg-white">
-    <div class="container py-3">
-        @if ($groups)
-            
-        <ul class="list-group"> 
-            @foreach ($groups as $g)
-            <li class="list-group-item">
-                <a href="#">{{$g->group->name}}</a>
-            </li>
-            
-        @endforeach
-        </ul>
-        @endif
-        <div class="form-group">
-        <a href="#" class="my-2 btn btn-primary">
-            Create Group
-        </a></div>
-    </div>
-</div>
-@endsection
-
 @section('main-content')
-
-    {{-- 
-        #####
-        ##  SMALL SCREEN - GROUP SELECTION
-        #####
-        --}}
-
-<div id="sm-group-selection" class="container d-md-none">
-    <div class="text-right">
-        <form action="" class="form-group">
-            <div class="row">
-                <div class="col-6">
-                    <a href="#" class="btn btn-primary form-control">
-                        Create Group
-                    </a>
-                </div>
-                <div class="col-6">
-                    <select name="" id="" class="form-control">
-                        <option value="">Private</option>
-                        <option value="" selected>Grup #1</option>
-                        <option value="">Kelompok ABC</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
 <div class="container d-flex flex-column justify-content-center bg-white py-4 shadow-sm mb-4">
 
