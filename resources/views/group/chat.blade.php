@@ -30,7 +30,8 @@
            </div>
         </div>
         <div class="chat-form">
-            <form id="text-message">
+            <form id="text-message" method="POST">
+                @csrf
                 <input type="hidden" id="memberId" name="memberId" value="{{$member->id}}">
                 <textarea name="txt_message" id="message_box" rows="2" class="message-box form-control"></textarea>
                 <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
@@ -38,7 +39,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 @push('script')
 <?php
@@ -49,6 +49,7 @@
     <script>
         
     $(document).ready(function(){
+
         function getCaret(el) { 
             if (el.selectionStart) { 
                 return el.selectionStart; 
@@ -91,41 +92,71 @@
             }
         }
 
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        var csrf_token = document.getElementsByName('_token')[0].value;
 
-        
-        var websocket = "{{$websocket}}";
-        var ws = new WebSocket("ws://"+websocket);
-
-        ws.onopen = function () {
-            socketStatus.innerHTML = 'Connected';
-            console.log("Websocket connected");
-            var data = {
-                "command" : "subscribe",
-                "channel" : "{{$group_data->id}}"
+        var pusher = new Pusher('d40739247fa4ee317dd7', {
+            cluster: 'ap1',
+            authEndPoint : '/pusher/auth',
+            auth: {
+                headers: {
+                    'X-CSRF-TOKEN': csrf_token,
+                }
             }
-            ws.send(JSON.stringify(data))
-        };
-        ws.onmessage = function (event) {
-            // Message received
+        });
+
+        var subs = 'group.'+"{{$group_data->id}}";
+        var channel = pusher.subscribe(subs);
+        channel.bind("ChatMessage", function(data) {
+            alert(JSON.stringify(data));
+            socketStatus.innerHTML("Connected");
+        });
+
+        Echo.channel(subs)
+            .listen('ChatMessage', (e)=>{
             var messageContainer = document.createElement('div');
             messageContainer.className= 'message';
-            let data = JSON.parse(event.data);
-            messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+data.name+'</div><div class="text">'+data.message+'</div><div class="time">'+data.time+'</div></div>';
+            messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+e.member+'</div><div class="text">'+e.message+'</div><div class="time">'+e.time+'</div></div>';
             chatContainer.appendChild(messageContainer);
-        };
-        ws.onerror = function(e){
-            console.log(e.data);
-        }
+            console.log(e);
+        })
 
-        ws.onclose = function () {
-            // websocket is closed.
-            socketStatus.innerHTML = 'Disconnected';
-            console.log("Connection closed");
-        };
+        
+        // var websocket = "{{$websocket}}";
+        // var ws = new WebSocket("ws://"+websocket);
+
+        // ws.onopen = function () {
+        //     socketStatus.innerHTML = 'Connected';
+        //     console.log("Websocket connected");
+        //     var data = {
+        //         "command" : "subscribe",
+        //         "channel" : "{{$group_data->id}}"
+        //     }
+        //     ws.send(JSON.stringify(data))
+        // };
+        // ws.onmessage = function (event) {
+        //     // Message received
+        //     var messageContainer = document.createElement('div');
+        //     messageContainer.className= 'message';
+        //     let data = JSON.parse(event.data);
+        //     messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+data.name+'</div><div class="text">'+data.message+'</div><div class="time">'+data.time+'</div></div>';
+        //     chatContainer.appendChild(messageContainer);
+        // };
+        // ws.onerror = function(e){
+        //     console.log(e.data);
+        // }
+
+        // ws.onclose = function () {
+        //     // websocket is closed.
+        //     socketStatus.innerHTML = 'Disconnected';
+        //     console.log("Connection closed");
+        // };
 
         form.onsubmit = function(e) {
             e.preventDefault();
             var name = "{{Auth::user()->full_name}}"
+            var group = "{{$group_data->id}}"
             var d = new Date();
             var dateTime = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
             var message = messageField.value;
@@ -134,9 +165,15 @@
                 "command" : "message",
                 "message" : message,
                 "member" : member,
-                "time" : dateTime
+                "time" : dateTime,
+                "group" : group,
             }
-            ws.send(JSON.stringify(data));
+            console.log(data);
+            axios.post('/sendMessage', data).catch(error => {
+                console.log(error.message);
+            }).then(response => {
+                console.log(response.data);
+            });
 
             var messageContainer = document.createElement('div');
             messageContainer.className= 'message self';
@@ -144,13 +181,11 @@
             chatContainer.appendChild(messageContainer);
 
             messageField.value = '';
-        groupChat.scrollTop = groupChat.scrollHeight;
+            groupChat.scrollTop = groupChat.scrollHeight;
 
 
             return false;
         }
-
-
     });
     </script>
 @endpush

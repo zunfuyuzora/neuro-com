@@ -28,12 +28,9 @@
   @yield('screen')
   
   <!-- Core -->
-  <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{ asset('vendor/popper/popper.min.js')}}"></script>
-  <script src="{{ asset('vendor/bootstrap/bootstrap.min.js')}}"></script>
+  <script src="{{ asset('js/app.js')}}"></script>
   
   <!-- Theme JS -->
-  <script src="{{ asset('js/argon.min.js')}}"></script>
   <script src="{{ asset('js/custom.js')}}"></script>
   @stack('script')
 </body>

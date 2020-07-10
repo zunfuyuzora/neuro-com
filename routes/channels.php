@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-
+use App\Group;
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -15,4 +15,10 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('group.{group}', function ($user,Group $group){
+    $isMem = $user->getMember->where('group_id',$group->id)->first();
+    $isMem = count($isMem) == 1 ? true:false;
+    return (bool) $isMem;
 });

@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user/{user}', 'ProfileController@userProfile')->name('profile');
 
+    Route::post('/sendMessage', 'MessageController@sendMessage')->name('sendMessage');
+
     Route::put('/user/{user}/updateData', 'ProfileController@updateData')->name('updateData');
     Route::put('/user/{user}/changePassword', 'ProfileController@changePassword')->name('changePassword');
     Route::put('/user/{user}/changeAvatar', 'ProfileController@changeAvatar')->name('changeAvatar');
