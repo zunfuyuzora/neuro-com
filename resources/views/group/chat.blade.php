@@ -117,7 +117,7 @@
             .listen('ChatMessage', (e)=>{
             var messageContainer = document.createElement('div');
             messageContainer.className= 'message';
-            messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+e.member+'</div><div class="text">'+e.message+'</div><div class="time">'+e.time+'</div></div>';
+            messageContainer.innerHTML = '<div class="wrapper"><div class="user">'+e.member+'</div><div class="text">'+e.message+'</div><div class="time">'+e.created_at+'</div></div>';
             chatContainer.appendChild(messageContainer);
             console.log(e);
         })

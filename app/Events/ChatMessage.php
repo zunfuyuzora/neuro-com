@@ -43,12 +43,12 @@ class ChatMessage implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Group $group, Member $member, Message $message)
+    public function __construct(Group $group, Member $member, Message $message, $timestamp)
     {
         $this->group = $group;
         $this->member = $member->user->full_name;
         $this->message = $message->message;
-        $this->created_at = $message->created_at;
+        $this->created_at = $timestamp;
     }
 
     /**

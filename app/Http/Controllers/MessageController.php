@@ -24,7 +24,7 @@ class MessageController extends Controller
             "created_at"=> $timestamp
         ]);
 
-        broadcast(new ChatMessage($group, $member, $message))->toOthers();
+        broadcast(new ChatMessage($group, $member, $message, $timestamp))->toOthers();
 
         return ['data' => 'Message Sent!'];
     }
