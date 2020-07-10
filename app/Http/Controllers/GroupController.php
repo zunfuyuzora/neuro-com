@@ -238,17 +238,27 @@ class GroupController extends Controller
         $usr = $request->username;
         $usr = str_replace("@","", $usr);
         $user = User::where('username', $usr)->first();
-        if(!$user){
-            return redirect(URL::previous());
+        if($user){
+            // Check if user already in group or not
+            $m = count(Member::where('user_id',$user->id)
+                    ->where('group_id', $group->id)
+                    ->get());
+            if($m == 0){
+                $n = Member::create([
+                    'id' => $idmember,
+                    'user_id' => $user->id,
+                    'group_id' => $group->id,
+                    'access' => $request->access,
+                    'status' => 1,
+                ]);
+                $message = "New Member Added";
+                $key = "member";
+            }else{
+                $message = "Member already in group";
+                $key = "memberFail";
+            }
         }
-        $n = Member::create([
-            'id' => $idmember,
-            'user_id' => $user->id,
-            'group_id' => $group->id,
-            'access' => $request->access,
-            'status' => 1,
-        ]);
-        return redirect(URL::previous());
+        return redirect(URL::previous())->with($key, $message);
         
 
     }

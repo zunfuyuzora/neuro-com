@@ -107,6 +107,13 @@
                     </div>
                     @endif
                 </div>
+
+                @if (Session::has('member'))
+                <p class="bg-primary border-radius-3 text-white px-2 text-small"><span>{{Session::get('member')}}</span></p>
+            @endif
+                @if (Session::has('memberFail'))
+                <p class="bg-danger border-radius-3 text-white px-2 text-small"><span>{{Session::get('memberFail')}}</span></p>
+            @endif
             </div>
             <div class="container">
 
