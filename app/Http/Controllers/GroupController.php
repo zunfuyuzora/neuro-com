@@ -142,13 +142,16 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        $members = Member::where('group_id',$group->id)->orderBy('created_at')->get();
+        $members = Member::where('group_id',$group->id)->orderBy('access')->get();
         $membership = $members->where('user_id', Auth::user()->id)->first();
+        $moderator = $members->where('access', "moderator");
+        $moderator = count($moderator);
         if($membership){
         return view('group.settings', [
             'group_data' => $group, 
             'members' =>  $members, 
-            'user_membership'=> $membership]);
+            'user_membership'=> $membership,
+            'moderator' => $moderator]);
         }else{
             return redirect(route('home'));
         }
@@ -244,6 +247,16 @@ class GroupController extends Controller
                     ->where('group_id', $group->id)
                     ->get());
             if($m == 0){
+                if($request->access == "moderator"){    
+                    $m = count(Member::where('group_id', $group->id)
+                            ->where('access', 'moderator')        
+                            ->get());
+                    if($m == 3){
+                        $key = "Exceed Moderator Limit";
+                        $message = "moderator";
+                        return redirect(URL::previous())->with($key, $message);
+                    }
+                }
                 $n = Member::create([
                     'id' => $idmember,
                     'user_id' => $user->id,
@@ -261,6 +274,33 @@ class GroupController extends Controller
         return redirect(URL::previous())->with($key, $message);
         
 
+    }
+
+    /**
+     * Upgrade member to moderator
+     * 
+     */
+    public function toModerator(Group $group, Request $request)
+    {
+        $request->validate([
+            "member_id" => "required",
+        ]);
+        $m = Member::where('group_id', $group->id)
+                ->where('access', 'moderator')
+                ->get();
+        $mn = count($m);
+        if($mn < 3){
+            $m = Member::where('id', $request->member_id)->first();
+            $m->access = "moderator";
+            $m->save();
+
+            $key = "toModSucceed";
+            $message = "Member Access upgraded to Moderator";
+        }else {
+            $key = "toModErr";
+            $message = "Can't upgrade member access to moderator";
+        }
+        return redirect(URL::previous())->with($key, $message);
     }
 
     /**

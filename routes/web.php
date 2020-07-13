@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function (){
         
         Route::put('/{group}/addMember', 'GroupController@member')->name('group.newMember');
         Route::delete('/{group}/removeMember', 'GroupController@memberRemove')->name('group.removeMember');
+        Route::put('/{group}/ugpradeMember', 'GroupController@toModerator')->name('group.upgradeMember');
     
         Route::get('/{group}/settings', 'GroupController@edit')->name('group.settings');
         Route::get('/{group}/chat', 'GroupController@chat')->name('group.chat');

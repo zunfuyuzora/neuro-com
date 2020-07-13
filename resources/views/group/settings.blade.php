@@ -111,8 +111,14 @@
                 @if (Session::has('member'))
                 <p class="bg-primary border-radius-3 text-white px-2 text-small"><span>{{Session::get('member')}}</span></p>
             @endif
+                @if (Session::has('toModSucceed'))
+                <p class="bg-primary border-radius-3 text-white px-2 text-small"><span>{{Session::get('toModSucceed')}}</span></p>
+            @endif
                 @if (Session::has('memberFail'))
                 <p class="bg-danger border-radius-3 text-white px-2 text-small"><span>{{Session::get('memberFail')}}</span></p>
+            @endif
+                @if (Session::has('toModErr'))
+                <p class="bg-danger border-radius-3 text-white px-2 text-small"><span>{{Session::get('toModErr')}}</span></p>
             @endif
             </div>
             <div class="container">
@@ -137,9 +143,18 @@
                     <div class="col flex-center-ultra">
                     @if ($user_membership->access == "member")
                     @else
+                    <div class="text-center">
+                        @if ($moderator < 3)
+                        @if ($m->access == "member")
+                        
+                        <a href="#upgrade" onclick="upgradeMember('{{$m->id}}')" class="text-primary">Upgrade</a>
+                        @endif
+                        @endif
+                    <br>
                         @if ($m->access != 'creator')                    
                         <a href="#remove" onclick="removeMember('{{$m->id}}')" class="text-danger">Delete</a>
                         @endif
+                    </div>
                     @endif
 
                     </div>
@@ -175,7 +190,10 @@
                 <div class="form-group">
                     <label for="access">Access Type</label>
                     <select name="access" id="access" class="form-control">
+                        @if ($moderator < 3)
+                            
                         <option value="moderator">Moderator (Full Management Rights)</option>
+                        @endif
                         <option value="member" selected>Member (Task Assignments)</option>
                     </select>
                 </div>
@@ -197,6 +215,11 @@
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="member_id" id="member_id" value="">
     </form>
+    <form action="{{route('group.upgradeMember', $group_data->id)}}" method="POST" id="upgradeForm">
+        @csrf
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="member_id" id="member_id2" value="">
+    </form>
     @endif
 @endif
 @endsection
@@ -207,11 +230,18 @@
 @else
     <script>
         var deleteForm = document.getElementById('deleteForm');
+        var upgradeForm = document.getElementById('upgradeForm');
         var memberId = document.getElementById('member_id');
+        var memberId2 = document.getElementById('member_id2');
 
         function removeMember(id){
             member_id.value = id;
             deleteForm.submit();
+        }
+
+        function upgradeMember(id){
+            member_id2.value = id;
+            upgradeForm.submit();
         }
     </script>
     @endif
