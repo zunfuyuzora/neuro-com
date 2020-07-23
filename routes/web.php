@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/{group}/t/{content}', 'ContentController@taskShow')->name('task.show');
         Route::get('/{group}/t/{content}/edit', 'ContentController@taskEdit')->name('task.edit');
         Route::put('/{group}/t/{content}/update', 'ContentController@taskUpdate')->name('task.update');      
+        Route::delete('/{group}/t/{content}/destroy', 'ContentController@taskDestroy')->name('task.destroy');      
 
         Route::post('/{group}/module','ContentController@uploadModule')->name('module.upload');
         Route::delete('/{group}/module/','ContentController@removeModule')->name('module.delete');

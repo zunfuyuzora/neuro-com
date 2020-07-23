@@ -90,7 +90,12 @@
             </div>
             @if ($access)
                 
-                <div class="text-right">
+                <div class="d-flex justify-content-between">
+                <form action="{{route('task.destroy', [$content->group_id, $content->id])}}" id="deleteTask" class="d-none" method="POST">
+                @csrf
+                <input type="hidden" name="_method" value="delete">
+                </form>
+                    <a class="text-danger" type="button" onclick="document.getElementById('deleteTask').submit()">Delete Task</a>
                     <a href="{{route('task.edit', ['group'=>$content->group_id,'content'=>$content->id])}}" class="btn btn-primary">Update Task</a>
                 </div>
 

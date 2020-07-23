@@ -23,16 +23,6 @@ class BoardController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -72,17 +62,6 @@ class BoardController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Board  $board
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Board $board)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -109,8 +88,15 @@ class BoardController extends Controller
      * @param  \App\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Board $board)
+    public function destroy($group, Board $board)
     {
-        //
+        $group_id = $board->group_id;
+        $task = Content::where('type', 'task')
+                ->where('board_id', $board->id)
+                ->get('id')->toArray();
+        Content::destroy($task);
+        $board->delete();
+
+        return redirect()->route('group.show', $group_id);
     }
 }

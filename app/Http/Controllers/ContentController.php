@@ -6,6 +6,7 @@ use App\Comment;
 use App\Member;
 use App\Content;
 use App\File;
+use App\Board;
 use App\Group;
 use App\Progress;
 use Illuminate\Http\Request;
@@ -223,6 +224,19 @@ class ContentController extends Controller
         }
 
         return redirect()->route('task.show', ['group'=>$group,'content'=>$content->id])->with('success', 'Task Updated Successfully');
+    }
+
+    /**
+     * Task Destroyer
+     * 
+     */
+    public function taskDestroy($group, Content $content)
+    {
+        $board_id = $content->board_id;
+        $group_id = Board::where('id', $board_id)->first();
+        $group_id = $group_id->group_id;
+        $content->delete();
+        return redirect()->route('board.show', [$group_id, $board_id]);
     }
 
     /**

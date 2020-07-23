@@ -22,7 +22,11 @@
                 </form>
             </div>
             <div class="col-3 text-right">
-                <button class="btn btn-sm btn-danger" title="Delete Board Permanently">Remove <i class="fa fa-trash"></i></button>
+            <form action="{{route('board.destroy', [$board->group_id, $board->id])}}" method="POST" class="hidden" id="deleteBoard">
+            @csrf
+            <input type="hidden" name="_method" value="delete">
+            </form>
+                <button class="btn btn-sm btn-danger" title="Delete Board Permanently" type="submit" form="deleteBoard">Remove <i class="fa fa-trash"></i></button>
                 <form action="" class="d-none form-group">
                     <select name="" id="" class="form-control">
                         <option value="" selected>All</option>
