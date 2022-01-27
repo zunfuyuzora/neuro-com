@@ -12,10 +12,14 @@
 **Storage Link** is a symlink that connect public access file `public\storage` to *ignored by git* folder `storage\app\public`. It prevents unnecessary file in storage for being uploaded to Git Repository. Configuration file at `\config\filesystems.php`
 1. Simply run `php artisan storage:link`.
 
-## For Database Migration & Seeding
-**Migration** is a Database Scheme that created automatically from Laravel Artisan Migrate. While **Seed** insert developer-defined data in `\database\seeds`
+## Database Migration & Seeding
+**Migration** is a Database Scheme that created automatically from Laravel Artisan Migrate. While **Seed** insert developer-defined record in `\database\seeds`
 1. Run `php artisan migrate`
-2. Run `php artisan db:seed` (optional)
+2. Run `php artisan db:seed`
+**Default Account** for authorization/login:
+1. username: admin | password: admin
+2. username: akane123 | password: akane123
+3. username: alexa123 | password: alexa123
 
 # Serving the Apps on server
 
