@@ -1,5 +1,9 @@
 # Environment
 
+Updated from Laravel 7 to 8.
+Require PHP 7.3 or 8.0.
+Default database use MySQL.
+
 ## Preparation
 
 1. Git clone https://github.com/zunkazaragi/neuro-com.
